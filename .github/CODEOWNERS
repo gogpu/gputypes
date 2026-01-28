@@ -1,0 +1,14 @@
+# CODEOWNERS for gputypes
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @kolkov
+
+# Type definitions
+*.go @kolkov
+
+# Documentation
+*.md @kolkov
+
+# Go module
+/go.mod @kolkov
