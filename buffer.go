@@ -3,31 +3,31 @@ package gputypes
 // BufferUsage describes how a buffer can be used.
 //
 // This is a bit flag type. Combine multiple usages with bitwise OR.
-type BufferUsage uint32
+type BufferUsage uint64
 
 const (
 	// BufferUsageNone indicates no usage (invalid for most operations).
-	BufferUsageNone BufferUsage = 0
+	BufferUsageNone BufferUsage = 0x0000000000000000
 	// BufferUsageMapRead allows mapping the buffer for reading.
-	BufferUsageMapRead BufferUsage = 1 << iota
+	BufferUsageMapRead BufferUsage = 0x0000000000000001
 	// BufferUsageMapWrite allows mapping the buffer for writing.
-	BufferUsageMapWrite
+	BufferUsageMapWrite BufferUsage = 0x0000000000000002
 	// BufferUsageCopySrc allows the buffer to be a copy source.
-	BufferUsageCopySrc
+	BufferUsageCopySrc BufferUsage = 0x0000000000000004
 	// BufferUsageCopyDst allows the buffer to be a copy destination.
-	BufferUsageCopyDst
+	BufferUsageCopyDst BufferUsage = 0x0000000000000008
 	// BufferUsageIndex allows use as an index buffer.
-	BufferUsageIndex
+	BufferUsageIndex BufferUsage = 0x0000000000000010
 	// BufferUsageVertex allows use as a vertex buffer.
-	BufferUsageVertex
+	BufferUsageVertex BufferUsage = 0x0000000000000020
 	// BufferUsageUniform allows use as a uniform buffer.
-	BufferUsageUniform
+	BufferUsageUniform BufferUsage = 0x0000000000000040
 	// BufferUsageStorage allows use as a storage buffer.
-	BufferUsageStorage
+	BufferUsageStorage BufferUsage = 0x0000000000000080
 	// BufferUsageIndirect allows use for indirect draw/dispatch commands.
-	BufferUsageIndirect
+	BufferUsageIndirect BufferUsage = 0x0000000000000100
 	// BufferUsageQueryResolve allows use for query result resolution.
-	BufferUsageQueryResolve
+	BufferUsageQueryResolve BufferUsage = 0x0000000000000200
 )
 
 // bufferUsageAll is a mask of all valid buffer usage flags.
@@ -61,7 +61,7 @@ type BufferDescriptor struct {
 }
 
 // BufferMapState describes the map state of a buffer.
-type BufferMapState uint8
+type BufferMapState uint32
 
 const (
 	// BufferMapStateUnmapped means the buffer is not mapped.
@@ -89,29 +89,29 @@ func (s BufferMapState) String() string {
 // MapMode describes the access mode for buffer mapping.
 //
 // This is a bit flag type.
-type MapMode uint8
+type MapMode uint32
 
 const (
 	// MapModeNone indicates no mapping (invalid for map operations).
-	MapModeNone MapMode = 0
+	MapModeNone MapMode = 0x00000000
 	// MapModeRead maps the buffer for reading.
-	MapModeRead MapMode = 1 << iota
+	MapModeRead MapMode = 0x00000001
 	// MapModeWrite maps the buffer for writing.
-	MapModeWrite
+	MapModeWrite MapMode = 0x00000002
 )
 
 // BufferBindingType describes how a buffer is bound in a bind group.
-type BufferBindingType uint8
+type BufferBindingType uint32
 
 const (
 	// BufferBindingTypeUndefined is an undefined binding type (invalid).
-	BufferBindingTypeUndefined BufferBindingType = iota
+	BufferBindingTypeUndefined BufferBindingType = 0x00000000
 	// BufferBindingTypeUniform binds as a uniform buffer (read-only in shaders).
-	BufferBindingTypeUniform
+	BufferBindingTypeUniform BufferBindingType = 0x00000001
 	// BufferBindingTypeStorage binds as a storage buffer (read-write in shaders).
-	BufferBindingTypeStorage
+	BufferBindingTypeStorage BufferBindingType = 0x00000002
 	// BufferBindingTypeReadOnlyStorage binds as a read-only storage buffer.
-	BufferBindingTypeReadOnlyStorage
+	BufferBindingTypeReadOnlyStorage BufferBindingType = 0x00000003
 )
 
 // String returns the binding type name.
@@ -131,18 +131,22 @@ func (t BufferBindingType) String() string {
 }
 
 // IndexFormat describes the format of index buffer data.
-type IndexFormat uint8
+type IndexFormat uint32
 
 const (
+	// IndexFormatUndefined is an undefined index format (invalid).
+	IndexFormatUndefined IndexFormat = 0x00000000
 	// IndexFormatUint16 uses 16-bit unsigned integers (max 65535 indices).
-	IndexFormatUint16 IndexFormat = iota
+	IndexFormatUint16 IndexFormat = 0x00000001
 	// IndexFormatUint32 uses 32-bit unsigned integers.
-	IndexFormatUint32
+	IndexFormatUint32 IndexFormat = 0x00000002
 )
 
 // String returns the index format name.
 func (f IndexFormat) String() string {
 	switch f {
+	case IndexFormatUndefined:
+		return "Undefined"
 	case IndexFormatUint16:
 		return "Uint16"
 	case IndexFormatUint32:

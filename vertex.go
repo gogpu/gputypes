@@ -4,76 +4,80 @@ package gputypes
 //
 // The format name follows the pattern: TypeSizex[Count]
 // where Type is the data type, Size is the bit width, and Count is the number of components.
-type VertexFormat uint8
+type VertexFormat uint32
 
 const (
+	// VertexFormatUndefined is an undefined vertex format (invalid).
+	VertexFormatUndefined VertexFormat = 0x00000000
 	// VertexFormatUint8x2 is two 8-bit unsigned integers.
-	VertexFormatUint8x2 VertexFormat = iota
+	VertexFormatUint8x2 VertexFormat = 0x00000001
 	// VertexFormatUint8x4 is four 8-bit unsigned integers.
-	VertexFormatUint8x4
+	VertexFormatUint8x4 VertexFormat = 0x00000002
 	// VertexFormatSint8x2 is two 8-bit signed integers.
-	VertexFormatSint8x2
+	VertexFormatSint8x2 VertexFormat = 0x00000003
 	// VertexFormatSint8x4 is four 8-bit signed integers.
-	VertexFormatSint8x4
+	VertexFormatSint8x4 VertexFormat = 0x00000004
 	// VertexFormatUnorm8x2 is two 8-bit normalized unsigned integers [0.0, 1.0].
-	VertexFormatUnorm8x2
+	VertexFormatUnorm8x2 VertexFormat = 0x00000005
 	// VertexFormatUnorm8x4 is four 8-bit normalized unsigned integers [0.0, 1.0].
-	VertexFormatUnorm8x4
+	VertexFormatUnorm8x4 VertexFormat = 0x00000006
 	// VertexFormatSnorm8x2 is two 8-bit normalized signed integers [-1.0, 1.0].
-	VertexFormatSnorm8x2
+	VertexFormatSnorm8x2 VertexFormat = 0x00000007
 	// VertexFormatSnorm8x4 is four 8-bit normalized signed integers [-1.0, 1.0].
-	VertexFormatSnorm8x4
+	VertexFormatSnorm8x4 VertexFormat = 0x00000008
 	// VertexFormatUint16x2 is two 16-bit unsigned integers.
-	VertexFormatUint16x2
+	VertexFormatUint16x2 VertexFormat = 0x00000009
 	// VertexFormatUint16x4 is four 16-bit unsigned integers.
-	VertexFormatUint16x4
+	VertexFormatUint16x4 VertexFormat = 0x0000000A
 	// VertexFormatSint16x2 is two 16-bit signed integers.
-	VertexFormatSint16x2
+	VertexFormatSint16x2 VertexFormat = 0x0000000B
 	// VertexFormatSint16x4 is four 16-bit signed integers.
-	VertexFormatSint16x4
+	VertexFormatSint16x4 VertexFormat = 0x0000000C
 	// VertexFormatUnorm16x2 is two 16-bit normalized unsigned integers [0.0, 1.0].
-	VertexFormatUnorm16x2
+	VertexFormatUnorm16x2 VertexFormat = 0x0000000D
 	// VertexFormatUnorm16x4 is four 16-bit normalized unsigned integers [0.0, 1.0].
-	VertexFormatUnorm16x4
+	VertexFormatUnorm16x4 VertexFormat = 0x0000000E
 	// VertexFormatSnorm16x2 is two 16-bit normalized signed integers [-1.0, 1.0].
-	VertexFormatSnorm16x2
+	VertexFormatSnorm16x2 VertexFormat = 0x0000000F
 	// VertexFormatSnorm16x4 is four 16-bit normalized signed integers [-1.0, 1.0].
-	VertexFormatSnorm16x4
+	VertexFormatSnorm16x4 VertexFormat = 0x00000010
 	// VertexFormatFloat16x2 is two 16-bit floats.
-	VertexFormatFloat16x2
+	VertexFormatFloat16x2 VertexFormat = 0x00000011
 	// VertexFormatFloat16x4 is four 16-bit floats.
-	VertexFormatFloat16x4
+	VertexFormatFloat16x4 VertexFormat = 0x00000012
 	// VertexFormatFloat32 is a single 32-bit float.
-	VertexFormatFloat32
+	VertexFormatFloat32 VertexFormat = 0x00000013
 	// VertexFormatFloat32x2 is two 32-bit floats (vec2).
-	VertexFormatFloat32x2
+	VertexFormatFloat32x2 VertexFormat = 0x00000014
 	// VertexFormatFloat32x3 is three 32-bit floats (vec3).
-	VertexFormatFloat32x3
+	VertexFormatFloat32x3 VertexFormat = 0x00000015
 	// VertexFormatFloat32x4 is four 32-bit floats (vec4).
-	VertexFormatFloat32x4
+	VertexFormatFloat32x4 VertexFormat = 0x00000016
 	// VertexFormatUint32 is a single 32-bit unsigned integer.
-	VertexFormatUint32
+	VertexFormatUint32 VertexFormat = 0x00000017
 	// VertexFormatUint32x2 is two 32-bit unsigned integers.
-	VertexFormatUint32x2
+	VertexFormatUint32x2 VertexFormat = 0x00000018
 	// VertexFormatUint32x3 is three 32-bit unsigned integers.
-	VertexFormatUint32x3
+	VertexFormatUint32x3 VertexFormat = 0x00000019
 	// VertexFormatUint32x4 is four 32-bit unsigned integers.
-	VertexFormatUint32x4
+	VertexFormatUint32x4 VertexFormat = 0x0000001A
 	// VertexFormatSint32 is a single 32-bit signed integer.
-	VertexFormatSint32
+	VertexFormatSint32 VertexFormat = 0x0000001B
 	// VertexFormatSint32x2 is two 32-bit signed integers.
-	VertexFormatSint32x2
+	VertexFormatSint32x2 VertexFormat = 0x0000001C
 	// VertexFormatSint32x3 is three 32-bit signed integers.
-	VertexFormatSint32x3
+	VertexFormatSint32x3 VertexFormat = 0x0000001D
 	// VertexFormatSint32x4 is four 32-bit signed integers.
-	VertexFormatSint32x4
+	VertexFormatSint32x4 VertexFormat = 0x0000001E
 	// VertexFormatUnorm1010102 is a packed 10-10-10-2 normalized unsigned format.
-	VertexFormatUnorm1010102
+	VertexFormatUnorm1010102 VertexFormat = 0x0000001F
 )
 
 // String returns the vertex format name.
 func (f VertexFormat) String() string {
 	switch f {
+	case VertexFormatUndefined:
+		return "Undefined"
 	case VertexFormatUint8x2:
 		return "Uint8x2"
 	case VertexFormatUint8x4:
@@ -164,18 +168,26 @@ func (f VertexFormat) Size() uint64 {
 }
 
 // VertexStepMode describes how vertex data is stepped.
-type VertexStepMode uint8
+type VertexStepMode uint32
 
 const (
+	// VertexStepModeUndefined is an undefined step mode (invalid).
+	VertexStepModeUndefined VertexStepMode = 0x00000000
+	// VertexStepModeVertexBufferNotUsed indicates the buffer is not used.
+	VertexStepModeVertexBufferNotUsed VertexStepMode = 0x00000001
 	// VertexStepModeVertex steps once per vertex.
-	VertexStepModeVertex VertexStepMode = iota
+	VertexStepModeVertex VertexStepMode = 0x00000002
 	// VertexStepModeInstance steps once per instance.
-	VertexStepModeInstance
+	VertexStepModeInstance VertexStepMode = 0x00000003
 )
 
 // String returns the step mode name.
 func (m VertexStepMode) String() string {
 	switch m {
+	case VertexStepModeUndefined:
+		return "Undefined"
+	case VertexStepModeVertexBufferNotUsed:
+		return "VertexBufferNotUsed"
 	case VertexStepModeVertex:
 		return "Vertex"
 	case VertexStepModeInstance:

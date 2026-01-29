@@ -53,20 +53,24 @@ type TextureBindingLayout struct {
 }
 
 // StorageTextureAccess describes storage texture access mode.
-type StorageTextureAccess uint8
+type StorageTextureAccess uint32
 
 const (
+	// StorageTextureAccessUndefined is an undefined access mode (invalid).
+	StorageTextureAccessUndefined StorageTextureAccess = 0x00000000
 	// StorageTextureAccessWriteOnly allows write-only access.
-	StorageTextureAccessWriteOnly StorageTextureAccess = iota
+	StorageTextureAccessWriteOnly StorageTextureAccess = 0x00000001
 	// StorageTextureAccessReadOnly allows read-only access.
-	StorageTextureAccessReadOnly
+	StorageTextureAccessReadOnly StorageTextureAccess = 0x00000002
 	// StorageTextureAccessReadWrite allows read-write access.
-	StorageTextureAccessReadWrite
+	StorageTextureAccessReadWrite StorageTextureAccess = 0x00000003
 )
 
 // String returns the storage texture access name.
 func (a StorageTextureAccess) String() string {
 	switch a {
+	case StorageTextureAccessUndefined:
+		return "Undefined"
 	case StorageTextureAccessWriteOnly:
 		return "WriteOnly"
 	case StorageTextureAccessReadOnly:

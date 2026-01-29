@@ -1,84 +1,96 @@
 package gputypes
 
 // LoadOp describes the load operation for an attachment.
-type LoadOp uint8
+type LoadOp uint32
 
 const (
-	// LoadOpClear clears the attachment to a specified value.
-	LoadOpClear LoadOp = iota
+	// LoadOpUndefined is an undefined load operation (invalid).
+	LoadOpUndefined LoadOp = 0x00000000
 	// LoadOpLoad loads the existing contents.
-	LoadOpLoad
+	LoadOpLoad LoadOp = 0x00000001
+	// LoadOpClear clears the attachment to a specified value.
+	LoadOpClear LoadOp = 0x00000002
 )
 
 // String returns the load operation name.
 func (op LoadOp) String() string {
 	switch op {
-	case LoadOpClear:
-		return "Clear"
+	case LoadOpUndefined:
+		return "Undefined"
 	case LoadOpLoad:
 		return "Load"
+	case LoadOpClear:
+		return "Clear"
 	default:
 		return "Unknown"
 	}
 }
 
 // StoreOp describes the store operation for an attachment.
-type StoreOp uint8
+type StoreOp uint32
 
 const (
-	// StoreOpDiscard discards the contents (for performance when not needed).
-	StoreOpDiscard StoreOp = iota
+	// StoreOpUndefined is an undefined store operation (invalid).
+	StoreOpUndefined StoreOp = 0x00000000
 	// StoreOpStore stores the contents to memory.
-	StoreOpStore
+	StoreOpStore StoreOp = 0x00000001
+	// StoreOpDiscard discards the contents (for performance when not needed).
+	StoreOpDiscard StoreOp = 0x00000002
 )
 
 // String returns the store operation name.
 func (op StoreOp) String() string {
 	switch op {
-	case StoreOpDiscard:
-		return "Discard"
+	case StoreOpUndefined:
+		return "Undefined"
 	case StoreOpStore:
 		return "Store"
+	case StoreOpDiscard:
+		return "Discard"
 	default:
 		return "Unknown"
 	}
 }
 
 // BlendFactor describes a blend factor for color blending.
-type BlendFactor uint8
+type BlendFactor uint32
 
 const (
+	// BlendFactorUndefined is an undefined blend factor (invalid).
+	BlendFactorUndefined BlendFactor = 0x00000000
 	// BlendFactorZero uses 0.
-	BlendFactorZero BlendFactor = iota
+	BlendFactorZero BlendFactor = 0x00000001
 	// BlendFactorOne uses 1.
-	BlendFactorOne
+	BlendFactorOne BlendFactor = 0x00000002
 	// BlendFactorSrc uses the source color.
-	BlendFactorSrc
+	BlendFactorSrc BlendFactor = 0x00000003
 	// BlendFactorOneMinusSrc uses (1 - source color).
-	BlendFactorOneMinusSrc
+	BlendFactorOneMinusSrc BlendFactor = 0x00000004
 	// BlendFactorSrcAlpha uses the source alpha.
-	BlendFactorSrcAlpha
+	BlendFactorSrcAlpha BlendFactor = 0x00000005
 	// BlendFactorOneMinusSrcAlpha uses (1 - source alpha).
-	BlendFactorOneMinusSrcAlpha
+	BlendFactorOneMinusSrcAlpha BlendFactor = 0x00000006
 	// BlendFactorDst uses the destination color.
-	BlendFactorDst
+	BlendFactorDst BlendFactor = 0x00000007
 	// BlendFactorOneMinusDst uses (1 - destination color).
-	BlendFactorOneMinusDst
+	BlendFactorOneMinusDst BlendFactor = 0x00000008
 	// BlendFactorDstAlpha uses the destination alpha.
-	BlendFactorDstAlpha
+	BlendFactorDstAlpha BlendFactor = 0x00000009
 	// BlendFactorOneMinusDstAlpha uses (1 - destination alpha).
-	BlendFactorOneMinusDstAlpha
+	BlendFactorOneMinusDstAlpha BlendFactor = 0x0000000A
 	// BlendFactorSrcAlphaSaturated uses min(source alpha, 1 - destination alpha).
-	BlendFactorSrcAlphaSaturated
+	BlendFactorSrcAlphaSaturated BlendFactor = 0x0000000B
 	// BlendFactorConstant uses the constant blend color.
-	BlendFactorConstant
+	BlendFactorConstant BlendFactor = 0x0000000C
 	// BlendFactorOneMinusConstant uses (1 - constant blend color).
-	BlendFactorOneMinusConstant
+	BlendFactorOneMinusConstant BlendFactor = 0x0000000D
 )
 
 // String returns the blend factor name.
 func (f BlendFactor) String() string {
 	switch f {
+	case BlendFactorUndefined:
+		return "Undefined"
 	case BlendFactorZero:
 		return "Zero"
 	case BlendFactorOne:
@@ -111,24 +123,28 @@ func (f BlendFactor) String() string {
 }
 
 // BlendOperation describes a blend operation.
-type BlendOperation uint8
+type BlendOperation uint32
 
 const (
+	// BlendOperationUndefined is an undefined blend operation (invalid).
+	BlendOperationUndefined BlendOperation = 0x00000000
 	// BlendOperationAdd computes src + dst.
-	BlendOperationAdd BlendOperation = iota
+	BlendOperationAdd BlendOperation = 0x00000001
 	// BlendOperationSubtract computes src - dst.
-	BlendOperationSubtract
+	BlendOperationSubtract BlendOperation = 0x00000002
 	// BlendOperationReverseSubtract computes dst - src.
-	BlendOperationReverseSubtract
+	BlendOperationReverseSubtract BlendOperation = 0x00000003
 	// BlendOperationMin computes min(src, dst).
-	BlendOperationMin
+	BlendOperationMin BlendOperation = 0x00000004
 	// BlendOperationMax computes max(src, dst).
-	BlendOperationMax
+	BlendOperationMax BlendOperation = 0x00000005
 )
 
 // String returns the blend operation name.
 func (op BlendOperation) String() string {
 	switch op {
+	case BlendOperationUndefined:
+		return "Undefined"
 	case BlendOperationAdd:
 		return "Add"
 	case BlendOperationSubtract:
@@ -215,21 +231,21 @@ func BlendStatePremultiplied() BlendState {
 // ColorWriteMask describes which color channels to write.
 //
 // This is a bit flag type.
-type ColorWriteMask uint8
+type ColorWriteMask uint32
 
 const (
 	// ColorWriteMaskNone writes no channels.
-	ColorWriteMaskNone ColorWriteMask = 0
+	ColorWriteMaskNone ColorWriteMask = 0x00000000
 	// ColorWriteMaskRed writes the red channel.
-	ColorWriteMaskRed ColorWriteMask = 1 << iota
+	ColorWriteMaskRed ColorWriteMask = 0x00000001
 	// ColorWriteMaskGreen writes the green channel.
-	ColorWriteMaskGreen
+	ColorWriteMaskGreen ColorWriteMask = 0x00000002
 	// ColorWriteMaskBlue writes the blue channel.
-	ColorWriteMaskBlue
+	ColorWriteMaskBlue ColorWriteMask = 0x00000004
 	// ColorWriteMaskAlpha writes the alpha channel.
-	ColorWriteMaskAlpha
+	ColorWriteMaskAlpha ColorWriteMask = 0x00000008
 	// ColorWriteMaskAll writes all channels.
-	ColorWriteMaskAll = ColorWriteMaskRed | ColorWriteMaskGreen | ColorWriteMaskBlue | ColorWriteMaskAlpha
+	ColorWriteMaskAll ColorWriteMask = 0x0000000F
 )
 
 // ColorTargetState describes a color target in a render pipeline.
@@ -243,24 +259,28 @@ type ColorTargetState struct {
 }
 
 // PrimitiveTopology describes how vertices form primitives.
-type PrimitiveTopology uint8
+type PrimitiveTopology uint32
 
 const (
+	// PrimitiveTopologyUndefined is an undefined topology (invalid).
+	PrimitiveTopologyUndefined PrimitiveTopology = 0x00000000
 	// PrimitiveTopologyPointList renders each vertex as a point.
-	PrimitiveTopologyPointList PrimitiveTopology = iota
+	PrimitiveTopologyPointList PrimitiveTopology = 0x00000001
 	// PrimitiveTopologyLineList renders pairs of vertices as lines.
-	PrimitiveTopologyLineList
+	PrimitiveTopologyLineList PrimitiveTopology = 0x00000002
 	// PrimitiveTopologyLineStrip renders connected lines.
-	PrimitiveTopologyLineStrip
+	PrimitiveTopologyLineStrip PrimitiveTopology = 0x00000003
 	// PrimitiveTopologyTriangleList renders groups of 3 vertices as triangles.
-	PrimitiveTopologyTriangleList
+	PrimitiveTopologyTriangleList PrimitiveTopology = 0x00000004
 	// PrimitiveTopologyTriangleStrip renders connected triangles.
-	PrimitiveTopologyTriangleStrip
+	PrimitiveTopologyTriangleStrip PrimitiveTopology = 0x00000005
 )
 
 // String returns the topology name.
 func (t PrimitiveTopology) String() string {
 	switch t {
+	case PrimitiveTopologyUndefined:
+		return "Undefined"
 	case PrimitiveTopologyPointList:
 		return "PointList"
 	case PrimitiveTopologyLineList:
@@ -277,18 +297,22 @@ func (t PrimitiveTopology) String() string {
 }
 
 // FrontFace describes the front face winding order.
-type FrontFace uint8
+type FrontFace uint32
 
 const (
+	// FrontFaceUndefined is an undefined front face (invalid).
+	FrontFaceUndefined FrontFace = 0x00000000
 	// FrontFaceCCW treats counter-clockwise vertices as front-facing.
-	FrontFaceCCW FrontFace = iota
+	FrontFaceCCW FrontFace = 0x00000001
 	// FrontFaceCW treats clockwise vertices as front-facing.
-	FrontFaceCW
+	FrontFaceCW FrontFace = 0x00000002
 )
 
 // String returns the front face name.
 func (f FrontFace) String() string {
 	switch f {
+	case FrontFaceUndefined:
+		return "Undefined"
 	case FrontFaceCCW:
 		return "CCW"
 	case FrontFaceCW:
@@ -299,20 +323,24 @@ func (f FrontFace) String() string {
 }
 
 // CullMode describes which faces to cull.
-type CullMode uint8
+type CullMode uint32
 
 const (
+	// CullModeUndefined is an undefined cull mode (invalid).
+	CullModeUndefined CullMode = 0x00000000
 	// CullModeNone culls no faces.
-	CullModeNone CullMode = iota
+	CullModeNone CullMode = 0x00000001
 	// CullModeFront culls front faces.
-	CullModeFront
+	CullModeFront CullMode = 0x00000002
 	// CullModeBack culls back faces.
-	CullModeBack
+	CullModeBack CullMode = 0x00000003
 )
 
 // String returns the cull mode name.
 func (m CullMode) String() string {
 	switch m {
+	case CullModeUndefined:
+		return "Undefined"
 	case CullModeNone:
 		return "None"
 	case CullModeFront:
@@ -368,30 +396,34 @@ func DefaultMultisampleState() MultisampleState {
 }
 
 // StencilOperation describes a stencil operation.
-type StencilOperation uint8
+type StencilOperation uint32
 
 const (
+	// StencilOperationUndefined is an undefined stencil operation (invalid).
+	StencilOperationUndefined StencilOperation = 0x00000000
 	// StencilOperationKeep keeps the current value.
-	StencilOperationKeep StencilOperation = iota
+	StencilOperationKeep StencilOperation = 0x00000001
 	// StencilOperationZero sets to zero.
-	StencilOperationZero
+	StencilOperationZero StencilOperation = 0x00000002
 	// StencilOperationReplace replaces with reference value.
-	StencilOperationReplace
+	StencilOperationReplace StencilOperation = 0x00000003
 	// StencilOperationInvert inverts all bits.
-	StencilOperationInvert
+	StencilOperationInvert StencilOperation = 0x00000004
 	// StencilOperationIncrementClamp increments and clamps to maximum.
-	StencilOperationIncrementClamp
+	StencilOperationIncrementClamp StencilOperation = 0x00000005
 	// StencilOperationDecrementClamp decrements and clamps to zero.
-	StencilOperationDecrementClamp
+	StencilOperationDecrementClamp StencilOperation = 0x00000006
 	// StencilOperationIncrementWrap increments and wraps to zero.
-	StencilOperationIncrementWrap
+	StencilOperationIncrementWrap StencilOperation = 0x00000007
 	// StencilOperationDecrementWrap decrements and wraps to maximum.
-	StencilOperationDecrementWrap
+	StencilOperationDecrementWrap StencilOperation = 0x00000008
 )
 
 // String returns the stencil operation name.
 func (op StencilOperation) String() string {
 	switch op {
+	case StencilOperationUndefined:
+		return "Undefined"
 	case StencilOperationKeep:
 		return "Keep"
 	case StencilOperationZero:

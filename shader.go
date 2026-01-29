@@ -3,17 +3,17 @@ package gputypes
 // ShaderStage represents a shader stage.
 //
 // This is a bit flag type. Multiple stages can be combined with bitwise OR.
-type ShaderStage uint8
+type ShaderStage uint32
 
 const (
 	// ShaderStageNone represents no shader stage.
-	ShaderStageNone ShaderStage = 0
+	ShaderStageNone ShaderStage = 0x00000000
 	// ShaderStageVertex is the vertex shader stage.
-	ShaderStageVertex ShaderStage = 1 << iota
+	ShaderStageVertex ShaderStage = 0x00000001
 	// ShaderStageFragment is the fragment (pixel) shader stage.
-	ShaderStageFragment
+	ShaderStageFragment ShaderStage = 0x00000002
 	// ShaderStageCompute is the compute shader stage.
-	ShaderStageCompute
+	ShaderStageCompute ShaderStage = 0x00000004
 )
 
 // ShaderStages is an alias for ShaderStage for clarity when used as a flag set.
