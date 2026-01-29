@@ -3,20 +3,24 @@ package gputypes
 // AddressMode describes texture coordinate addressing.
 //
 // Determines how texture coordinates outside [0.0, 1.0] are handled.
-type AddressMode uint8
+type AddressMode uint32
 
 const (
+	// AddressModeUndefined is an undefined address mode (invalid).
+	AddressModeUndefined AddressMode = 0x00000000
 	// AddressModeClampToEdge clamps coordinates to the edge texel.
-	AddressModeClampToEdge AddressMode = iota
+	AddressModeClampToEdge AddressMode = 0x00000001
 	// AddressModeRepeat repeats the texture (wrapping).
-	AddressModeRepeat
+	AddressModeRepeat AddressMode = 0x00000002
 	// AddressModeMirrorRepeat repeats with mirroring.
-	AddressModeMirrorRepeat
+	AddressModeMirrorRepeat AddressMode = 0x00000003
 )
 
 // String returns the address mode name.
 func (m AddressMode) String() string {
 	switch m {
+	case AddressModeUndefined:
+		return "Undefined"
 	case AddressModeClampToEdge:
 		return "ClampToEdge"
 	case AddressModeRepeat:
@@ -31,18 +35,22 @@ func (m AddressMode) String() string {
 // FilterMode describes texture filtering.
 //
 // Used for magnification and minification filters.
-type FilterMode uint8
+type FilterMode uint32
 
 const (
+	// FilterModeUndefined is an undefined filter mode (invalid).
+	FilterModeUndefined FilterMode = 0x00000000
 	// FilterModeNearest uses nearest-neighbor filtering (pixelated).
-	FilterModeNearest FilterMode = iota
+	FilterModeNearest FilterMode = 0x00000001
 	// FilterModeLinear uses linear interpolation (smooth).
-	FilterModeLinear
+	FilterModeLinear FilterMode = 0x00000002
 )
 
 // String returns the filter mode name.
 func (m FilterMode) String() string {
 	switch m {
+	case FilterModeUndefined:
+		return "Undefined"
 	case FilterModeNearest:
 		return "Nearest"
 	case FilterModeLinear:
@@ -53,18 +61,22 @@ func (m FilterMode) String() string {
 }
 
 // MipmapFilterMode describes mipmap filtering.
-type MipmapFilterMode uint8
+type MipmapFilterMode uint32
 
 const (
+	// MipmapFilterModeUndefined is an undefined mipmap filter mode (invalid).
+	MipmapFilterModeUndefined MipmapFilterMode = 0x00000000
 	// MipmapFilterModeNearest selects the nearest mip level.
-	MipmapFilterModeNearest MipmapFilterMode = iota
+	MipmapFilterModeNearest MipmapFilterMode = 0x00000001
 	// MipmapFilterModeLinear interpolates between mip levels.
-	MipmapFilterModeLinear
+	MipmapFilterModeLinear MipmapFilterMode = 0x00000002
 )
 
 // String returns the mipmap filter mode name.
 func (m MipmapFilterMode) String() string {
 	switch m {
+	case MipmapFilterModeUndefined:
+		return "Undefined"
 	case MipmapFilterModeNearest:
 		return "Nearest"
 	case MipmapFilterModeLinear:
@@ -77,27 +89,27 @@ func (m MipmapFilterMode) String() string {
 // CompareFunction describes a comparison function.
 //
 // Used for depth testing and sampler comparison.
-type CompareFunction uint8
+type CompareFunction uint32
 
 const (
 	// CompareFunctionUndefined is undefined (no comparison).
-	CompareFunctionUndefined CompareFunction = iota
+	CompareFunctionUndefined CompareFunction = 0x00000000
 	// CompareFunctionNever always fails.
-	CompareFunctionNever
+	CompareFunctionNever CompareFunction = 0x00000001
 	// CompareFunctionLess passes if source < destination.
-	CompareFunctionLess
+	CompareFunctionLess CompareFunction = 0x00000002
 	// CompareFunctionEqual passes if source == destination.
-	CompareFunctionEqual
+	CompareFunctionEqual CompareFunction = 0x00000003
 	// CompareFunctionLessEqual passes if source <= destination.
-	CompareFunctionLessEqual
+	CompareFunctionLessEqual CompareFunction = 0x00000004
 	// CompareFunctionGreater passes if source > destination.
-	CompareFunctionGreater
+	CompareFunctionGreater CompareFunction = 0x00000005
 	// CompareFunctionNotEqual passes if source != destination.
-	CompareFunctionNotEqual
+	CompareFunctionNotEqual CompareFunction = 0x00000006
 	// CompareFunctionGreaterEqual passes if source >= destination.
-	CompareFunctionGreaterEqual
+	CompareFunctionGreaterEqual CompareFunction = 0x00000007
 	// CompareFunctionAlways always passes.
-	CompareFunctionAlways
+	CompareFunctionAlways CompareFunction = 0x00000008
 )
 
 // String returns the compare function name.
@@ -194,17 +206,17 @@ func LinearSamplerDescriptor() SamplerDescriptor {
 }
 
 // SamplerBindingType describes how a sampler is bound in a bind group.
-type SamplerBindingType uint8
+type SamplerBindingType uint32
 
 const (
 	// SamplerBindingTypeUndefined is undefined (invalid).
-	SamplerBindingTypeUndefined SamplerBindingType = iota
+	SamplerBindingTypeUndefined SamplerBindingType = 0x00000000
 	// SamplerBindingTypeFiltering supports filtered texture sampling.
-	SamplerBindingTypeFiltering
+	SamplerBindingTypeFiltering SamplerBindingType = 0x00000001
 	// SamplerBindingTypeNonFiltering does not support filtering.
-	SamplerBindingTypeNonFiltering
+	SamplerBindingTypeNonFiltering SamplerBindingType = 0x00000002
 	// SamplerBindingTypeComparison is for depth comparison sampling.
-	SamplerBindingTypeComparison
+	SamplerBindingTypeComparison SamplerBindingType = 0x00000003
 )
 
 // String returns the sampler binding type name.

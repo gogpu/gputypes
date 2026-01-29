@@ -1,13 +1,21 @@
 # Roadmap
 
-## Current: v0.1.0
+## Current: v0.2.0
 
-Initial release with core WebGPU types.
+All enum values aligned with webgpu.h specification for binary compatibility.
+
+## Released
+
+### v0.2.0 (2026-01-29)
+- webgpu.h spec-compliant enum values
+- Binary compatibility with wgpu-native
+
+### v0.1.0 (2026-01-29)
+- Initial release with core WebGPU types
 
 ## Planned
 
-### v0.2.0
-- Add any missing descriptor types based on ecosystem feedback
+### v0.3.0
 - Query types (OcclusionQuery, TimestampQuery)
 - Additional validation helpers
 

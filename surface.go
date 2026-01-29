@@ -8,40 +8,33 @@ package gputypes
 type PresentMode uint32
 
 const (
-	// PresentModeAutoVsync chooses FifoRelaxed or Fifo automatically.
-	// Supported everywhere due to fallback behavior.
-	PresentModeAutoVsync PresentMode = iota
-
-	// PresentModeAutoNoVsync chooses Immediate, Mailbox, or Fifo automatically.
-	// Supported everywhere due to fallback behavior.
-	PresentModeAutoNoVsync
+	// PresentModeUndefined is an undefined present mode (invalid).
+	PresentModeUndefined PresentMode = 0x00000000
 
 	// PresentModeFifo presents frames in FIFO order with VSync.
 	// No tearing. Supported on all platforms.
 	// Also known as "VSync On".
-	PresentModeFifo
+	PresentModeFifo PresentMode = 0x00000001
 
 	// PresentModeFifoRelaxed is like Fifo but allows tearing if frames
 	// take longer than one vblank.
 	// Also known as "Adaptive VSync".
-	PresentModeFifoRelaxed
+	PresentModeFifoRelaxed PresentMode = 0x00000002
 
 	// PresentModeImmediate presents frames immediately without waiting for vblank.
 	// May cause tearing. Also known as "VSync Off".
-	PresentModeImmediate
+	PresentModeImmediate PresentMode = 0x00000003
 
 	// PresentModeMailbox uses a single-frame queue, replacing old frames.
 	// No tearing. Also known as "Fast VSync".
-	PresentModeMailbox
+	PresentModeMailbox PresentMode = 0x00000004
 )
 
 // String returns the string representation of PresentMode.
 func (m PresentMode) String() string {
 	switch m {
-	case PresentModeAutoVsync:
-		return "AutoVsync"
-	case PresentModeAutoNoVsync:
-		return "AutoNoVsync"
+	case PresentModeUndefined:
+		return "Undefined"
 	case PresentModeFifo:
 		return "Fifo"
 	case PresentModeFifoRelaxed:
@@ -60,19 +53,19 @@ type CompositeAlphaMode uint32
 
 const (
 	// CompositeAlphaModeAuto chooses Opaque or Inherit automatically.
-	CompositeAlphaModeAuto CompositeAlphaMode = iota
+	CompositeAlphaModeAuto CompositeAlphaMode = 0x00000000
 
 	// CompositeAlphaModeOpaque ignores alpha, treats texture as fully opaque.
-	CompositeAlphaModeOpaque
+	CompositeAlphaModeOpaque CompositeAlphaMode = 0x00000001
 
-	// CompositeAlphaModePreMultiplied expects colors to be pre-multiplied by alpha.
-	CompositeAlphaModePreMultiplied
+	// CompositeAlphaModePremultiplied expects colors to be pre-multiplied by alpha.
+	CompositeAlphaModePremultiplied CompositeAlphaMode = 0x00000002
 
-	// CompositeAlphaModePostMultiplied has compositor multiply colors by alpha.
-	CompositeAlphaModePostMultiplied
+	// CompositeAlphaModeUnpremultiplied has compositor multiply colors by alpha.
+	CompositeAlphaModeUnpremultiplied CompositeAlphaMode = 0x00000003
 
 	// CompositeAlphaModeInherit uses platform-specific default.
-	CompositeAlphaModeInherit
+	CompositeAlphaModeInherit CompositeAlphaMode = 0x00000004
 )
 
 // String returns the string representation of CompositeAlphaMode.
@@ -82,10 +75,10 @@ func (m CompositeAlphaMode) String() string {
 		return "Auto"
 	case CompositeAlphaModeOpaque:
 		return "Opaque"
-	case CompositeAlphaModePreMultiplied:
-		return "PreMultiplied"
-	case CompositeAlphaModePostMultiplied:
-		return "PostMultiplied"
+	case CompositeAlphaModePremultiplied:
+		return "Premultiplied"
+	case CompositeAlphaModeUnpremultiplied:
+		return "Unpremultiplied"
 	case CompositeAlphaModeInherit:
 		return "Inherit"
 	default:
