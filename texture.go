@@ -644,9 +644,19 @@ const (
 	TextureUsageRenderAttachment TextureUsage = 0x0000000000000010
 )
 
+// textureUsageAll is a mask of all valid texture usage flags.
+const textureUsageAll = TextureUsageCopySrc | TextureUsageCopyDst |
+	TextureUsageTextureBinding | TextureUsageStorageBinding |
+	TextureUsageRenderAttachment
+
 // Contains returns true if the usage includes the given flag.
 func (u TextureUsage) Contains(flag TextureUsage) bool {
 	return u&flag == flag
+}
+
+// ContainsUnknownBits returns true if the usage contains any unknown flags.
+func (u TextureUsage) ContainsUnknownBits() bool {
+	return u&^textureUsageAll != 0
 }
 
 // TextureDescriptor describes a texture.

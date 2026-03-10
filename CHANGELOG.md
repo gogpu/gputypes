@@ -2,6 +2,14 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.3.0] - 2026-03-10
+
+### Added
+
+- **TextureUsage.ContainsUnknownBits()** — returns true if the usage contains
+  any unknown flags. Follows the same pattern as `BufferUsage.ContainsUnknownBits()`.
+  Used by wgpu core validation layer for texture descriptor validation.
+
 ## [v0.2.0] - 2026-01-29
 
 ### Changed
