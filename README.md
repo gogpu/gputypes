@@ -59,7 +59,7 @@ import "github.com/gogpu/gputypes"
                gogpu             born-ml
 ```
 
-## Types (v0.1.0)
+## Types
 
 Based on [WebGPU spec](https://www.w3.org/TR/webgpu/) and [wgpu-types](https://docs.rs/wgpu-types):
 
@@ -179,11 +179,12 @@ This ensures **type compatibility** across all implementations.
 
 ## Status
 
-**Current:** v0.1.0
+**Current:** v0.3.0
 
 **Roadmap:**
 - v0.1.0 — Core types (TextureFormat, BufferUsage, etc.) **DONE**
-- v0.2.0 — Full WebGPU spec coverage (remaining descriptor types)
+- v0.2.0 — webgpu.h spec-compliant enum values **DONE**
+- v0.3.0 — Validation helpers (ContainsUnknownBits) **DONE**
 - v1.0.0 — Stable API matching WebGPU spec
 
 ## License
