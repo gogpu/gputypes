@@ -2,6 +2,16 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.4.0] - 2026-04-03
+
+### Added
+
+- **BlendComponent.UsesConstant()** — returns true if the blend component uses
+  `BlendFactorConstant` or `BlendFactorOneMinusConstant` in either `SrcFactor` or
+  `DstFactor`. Used by wgpu for draw-time validation that `SetBlendConstant()` has
+  been called when the pipeline requires it. Matches Rust wgpu-types
+  `BlendComponent::uses_constant()`.
+
 ## [v0.3.0] - 2026-03-10
 
 ### Added
