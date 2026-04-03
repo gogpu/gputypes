@@ -170,6 +170,16 @@ type BlendComponent struct {
 	Operation BlendOperation
 }
 
+// UsesConstant returns true if this blend component uses the blend constant
+// color (BlendFactorConstant or BlendFactorOneMinusConstant).
+// Matches Rust wgpu-types BlendComponent::uses_constant().
+func (bc BlendComponent) UsesConstant() bool {
+	return bc.SrcFactor == BlendFactorConstant ||
+		bc.SrcFactor == BlendFactorOneMinusConstant ||
+		bc.DstFactor == BlendFactorConstant ||
+		bc.DstFactor == BlendFactorOneMinusConstant
+}
+
 // BlendState describes color blending for a render target.
 type BlendState struct {
 	// Color describes RGB channel blending.
