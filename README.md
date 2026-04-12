@@ -83,7 +83,7 @@ Based on [WebGPU spec](https://www.w3.org/TR/webgpu/) and [wgpu-types](https://d
 - `ProgrammableStage`
 
 ### Pipeline
-- `PrimitiveTopology`, `FrontFace`, `CullMode`, `PrimitiveState`
+- `PrimitiveTopology`, `FrontFace`, `CullMode`, `PrimitiveState` — zero value of each enum is the WebGPU spec default (`TriangleList`, `CCW`, `None`), so `PrimitiveState{}` is a valid spec-default configuration
 - `BlendState`, `BlendFactor`, `BlendOperation`, `BlendComponent`
 - `DepthStencilState`, `StencilOperation`, `StencilFaceState`
 - `MultisampleState`, `ColorTargetState`, `ColorWriteMask`
@@ -179,13 +179,7 @@ This ensures **type compatibility** across all implementations.
 
 ## Status
 
-**Current:** v0.3.0
-
-**Roadmap:**
-- v0.1.0 — Core types (TextureFormat, BufferUsage, etc.) **DONE**
-- v0.2.0 — webgpu.h spec-compliant enum values **DONE**
-- v0.3.0 — Validation helpers (ContainsUnknownBits) **DONE**
-- v1.0.0 — Stable API matching WebGPU spec
+See [CHANGELOG.md](CHANGELOG.md) for version history and [ROADMAP.md](ROADMAP.md) for upcoming plans.
 
 ## License
 
