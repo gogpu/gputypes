@@ -269,36 +269,42 @@ type ColorTargetState struct {
 }
 
 // PrimitiveTopology describes how vertices form primitives.
+//
+// The zero value is [PrimitiveTopologyTriangleList], which matches the
+// WebGPU spec default ( https://gpuweb.github.io/gpuweb/#enumdef-gpuprimitivetopology ).
+// This means `PrimitiveState{}` is a fully valid WebGPU-spec-default primitive
+// assembly configuration — no normalization pass is needed anywhere.
+//
+// This is intentionally better than Rust wgpu's approach: Rust relies on
+// `#[derive(Default)] #[default]` annotations to achieve the same result.
+// We get it for free from Go's zero initialization rules.
 type PrimitiveTopology uint32
 
 const (
-	// PrimitiveTopologyUndefined is an undefined topology (invalid).
-	PrimitiveTopologyUndefined PrimitiveTopology = 0x00000000
-	// PrimitiveTopologyPointList renders each vertex as a point.
-	PrimitiveTopologyPointList PrimitiveTopology = 0x00000001
-	// PrimitiveTopologyLineList renders pairs of vertices as lines.
-	PrimitiveTopologyLineList PrimitiveTopology = 0x00000002
-	// PrimitiveTopologyLineStrip renders connected lines.
-	PrimitiveTopologyLineStrip PrimitiveTopology = 0x00000003
 	// PrimitiveTopologyTriangleList renders groups of 3 vertices as triangles.
-	PrimitiveTopologyTriangleList PrimitiveTopology = 0x00000004
+	// This is the zero value and WebGPU spec default.
+	PrimitiveTopologyTriangleList PrimitiveTopology = 0
+	// PrimitiveTopologyPointList renders each vertex as a point.
+	PrimitiveTopologyPointList PrimitiveTopology = 1
+	// PrimitiveTopologyLineList renders pairs of vertices as lines.
+	PrimitiveTopologyLineList PrimitiveTopology = 2
+	// PrimitiveTopologyLineStrip renders connected lines.
+	PrimitiveTopologyLineStrip PrimitiveTopology = 3
 	// PrimitiveTopologyTriangleStrip renders connected triangles.
-	PrimitiveTopologyTriangleStrip PrimitiveTopology = 0x00000005
+	PrimitiveTopologyTriangleStrip PrimitiveTopology = 4
 )
 
 // String returns the topology name.
 func (t PrimitiveTopology) String() string {
 	switch t {
-	case PrimitiveTopologyUndefined:
-		return "Undefined"
+	case PrimitiveTopologyTriangleList:
+		return "TriangleList"
 	case PrimitiveTopologyPointList:
 		return "PointList"
 	case PrimitiveTopologyLineList:
 		return "LineList"
 	case PrimitiveTopologyLineStrip:
 		return "LineStrip"
-	case PrimitiveTopologyTriangleList:
-		return "TriangleList"
 	case PrimitiveTopologyTriangleStrip:
 		return "TriangleStrip"
 	default:
@@ -307,22 +313,22 @@ func (t PrimitiveTopology) String() string {
 }
 
 // FrontFace describes the front face winding order.
+//
+// The zero value is [FrontFaceCCW], matching the WebGPU spec default
+// ( https://gpuweb.github.io/gpuweb/#enumdef-gpufrontface ).
 type FrontFace uint32
 
 const (
-	// FrontFaceUndefined is an undefined front face (invalid).
-	FrontFaceUndefined FrontFace = 0x00000000
 	// FrontFaceCCW treats counter-clockwise vertices as front-facing.
-	FrontFaceCCW FrontFace = 0x00000001
+	// This is the zero value and WebGPU spec default.
+	FrontFaceCCW FrontFace = 0
 	// FrontFaceCW treats clockwise vertices as front-facing.
-	FrontFaceCW FrontFace = 0x00000002
+	FrontFaceCW FrontFace = 1
 )
 
 // String returns the front face name.
 func (f FrontFace) String() string {
 	switch f {
-	case FrontFaceUndefined:
-		return "Undefined"
 	case FrontFaceCCW:
 		return "CCW"
 	case FrontFaceCW:
@@ -333,24 +339,23 @@ func (f FrontFace) String() string {
 }
 
 // CullMode describes which faces to cull.
+//
+// The zero value is [CullModeNone], matching the WebGPU spec default
+// ( https://gpuweb.github.io/gpuweb/#enumdef-gpucullmode ).
 type CullMode uint32
 
 const (
-	// CullModeUndefined is an undefined cull mode (invalid).
-	CullModeUndefined CullMode = 0x00000000
-	// CullModeNone culls no faces.
-	CullModeNone CullMode = 0x00000001
+	// CullModeNone culls no faces. This is the zero value and WebGPU spec default.
+	CullModeNone CullMode = 0
 	// CullModeFront culls front faces.
-	CullModeFront CullMode = 0x00000002
+	CullModeFront CullMode = 1
 	// CullModeBack culls back faces.
-	CullModeBack CullMode = 0x00000003
+	CullModeBack CullMode = 2
 )
 
 // String returns the cull mode name.
 func (m CullMode) String() string {
 	switch m {
-	case CullModeUndefined:
-		return "Undefined"
 	case CullModeNone:
 		return "None"
 	case CullModeFront:
@@ -376,14 +381,17 @@ type PrimitiveState struct {
 	UnclippedDepth bool
 }
 
-// DefaultPrimitiveState returns a primitive state with common defaults.
+// DefaultPrimitiveState returns a primitive state with WebGPU spec defaults.
+//
+// This is equivalent to `PrimitiveState{}` — the zero value of PrimitiveState
+// is already the WebGPU spec default because all enum fields
+// ([PrimitiveTopology], [FrontFace], [CullMode]) have their zero value
+// defined as the spec default. This function is provided for explicit
+// call-site documentation and parity with other Default*State helpers.
+//
+// See Rust wgpu's `PrimitiveState::default()` for the equivalent pattern.
 func DefaultPrimitiveState() PrimitiveState {
-	return PrimitiveState{
-		Topology:       PrimitiveTopologyTriangleList,
-		FrontFace:      FrontFaceCCW,
-		CullMode:       CullModeNone,
-		UnclippedDepth: false,
-	}
+	return PrimitiveState{}
 }
 
 // MultisampleState describes multisampling state.

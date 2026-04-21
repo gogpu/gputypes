@@ -2,6 +2,19 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.5.0] - 2026-04-21
+
+### Changed (BREAKING)
+
+- **PrimitiveTopology**: zero value is now `PrimitiveTopologyTriangleList` (was `PrimitiveTopologyUndefined`). Enum values renumbered: TriangleList=0, PointList=1, LineList=2, LineStrip=3, TriangleStrip=4. Removed `PrimitiveTopologyUndefined`.
+- **FrontFace**: zero value is now `FrontFaceCCW` (was `FrontFaceUndefined`). Enum values renumbered: CCW=0, CW=1. Removed `FrontFaceUndefined`.
+- **CullMode**: zero value is now `CullModeNone` (was `CullModeUndefined`). Enum values renumbered: None=0, Front=1, Back=2. Removed `CullModeUndefined`.
+- **`DefaultPrimitiveState()`** now returns `PrimitiveState{}` — the zero value IS the WebGPU spec default. Function kept for explicit documentation and parity with other Default*State helpers.
+
+**Why:** Go zero value of `PrimitiveState{}` is now a fully valid WebGPU-spec-default configuration. No normalization pass needed. Eliminates the class of bugs where `Undefined` sentinel values leak into HAL backends.
+
+**Migration:** downstream repos (wgpu, gogpu, gg) must update HAL enum→API mapping tables. `*Undefined` constants no longer exist — remove any references or `switch` cases.
+
 ## [v0.4.0] - 2026-04-03
 
 ### Added
