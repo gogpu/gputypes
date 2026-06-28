@@ -2,6 +2,12 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.5.1] - 2026-06-28
+
+### Fixed
+
+- **`TextureFormat.BlockCopySize() uint32`** — canonical bytes-per-texel-block method on TextureFormat. Eliminates 3 independent buggy implementations across wgpu, gogpu, and gg (each had different wrong values — e.g., RG16 returned 8 instead of 4 in gogpu). Covers all 87 defined formats, verified against Rust wgpu-types `block_copy_size`. Returns 0 for implementation-defined formats (Depth24Plus). Table-driven tests with completeness guard.
+
 ## [v0.5.0] - 2026-04-21
 
 ### Changed (BREAKING)
