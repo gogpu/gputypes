@@ -522,6 +522,162 @@ func (f TextureFormat) IsSrgb() bool {
 	}
 }
 
+// BlockCopySize returns the number of bytes occupied per texel block for this format.
+//
+// For uncompressed formats, one block equals one texel.
+// For compressed formats (BC, ETC2, ASTC), one block covers multiple texels
+// (e.g. 4x4 for BC/ETC2, variable for ASTC), but the returned value is
+// the byte size of that block.
+//
+// Returns 0 for formats whose copy size is implementation-defined:
+//   - Depth24Plus
+//   - Depth24PlusStencil8
+//   - Depth32FloatStencil8
+//
+// Returns 0 for unknown or invalid formats (including TextureFormatUndefined).
+//
+// Reference: Rust wgpu-types TextureFormat::block_copy_size().
+func (f TextureFormat) BlockCopySize() uint32 {
+	switch f {
+	// 8-bit formats (1 byte per texel)
+	case TextureFormatR8Unorm,
+		TextureFormatR8Snorm,
+		TextureFormatR8Uint,
+		TextureFormatR8Sint,
+		TextureFormatStencil8:
+		return 1
+
+	// 16-bit formats (2 bytes per texel)
+	case TextureFormatR16Unorm,
+		TextureFormatR16Snorm,
+		TextureFormatR16Uint,
+		TextureFormatR16Sint,
+		TextureFormatR16Float,
+		TextureFormatRG8Unorm,
+		TextureFormatRG8Snorm,
+		TextureFormatRG8Uint,
+		TextureFormatRG8Sint,
+		TextureFormatDepth16Unorm:
+		return 2
+
+	// 32-bit formats (4 bytes per texel)
+	case TextureFormatR32Float,
+		TextureFormatR32Uint,
+		TextureFormatR32Sint,
+		TextureFormatRG16Unorm,
+		TextureFormatRG16Snorm,
+		TextureFormatRG16Uint,
+		TextureFormatRG16Sint,
+		TextureFormatRG16Float,
+		TextureFormatRGBA8Unorm,
+		TextureFormatRGBA8UnormSrgb,
+		TextureFormatRGBA8Snorm,
+		TextureFormatRGBA8Uint,
+		TextureFormatRGBA8Sint,
+		TextureFormatBGRA8Unorm,
+		TextureFormatBGRA8UnormSrgb,
+		TextureFormatRGB10A2Uint,
+		TextureFormatRGB10A2Unorm,
+		TextureFormatRG11B10Ufloat,
+		TextureFormatRGB9E5Ufloat,
+		TextureFormatDepth32Float:
+		return 4
+
+	// 64-bit formats (8 bytes per texel)
+	case TextureFormatRG32Float,
+		TextureFormatRG32Uint,
+		TextureFormatRG32Sint,
+		TextureFormatRGBA16Unorm,
+		TextureFormatRGBA16Snorm,
+		TextureFormatRGBA16Uint,
+		TextureFormatRGBA16Sint,
+		TextureFormatRGBA16Float:
+		return 8
+
+	// 128-bit formats (16 bytes per texel)
+	case TextureFormatRGBA32Float,
+		TextureFormatRGBA32Uint,
+		TextureFormatRGBA32Sint:
+		return 16
+
+	// Depth/stencil formats with implementation-defined copy size
+	case TextureFormatDepth24Plus,
+		TextureFormatDepth24PlusStencil8,
+		TextureFormatDepth32FloatStencil8:
+		return 0
+
+	// BC compressed formats — 8 bytes per 4x4 block
+	case TextureFormatBC1RGBAUnorm,
+		TextureFormatBC1RGBAUnormSrgb,
+		TextureFormatBC4RUnorm,
+		TextureFormatBC4RSnorm:
+		return 8
+
+	// BC compressed formats — 16 bytes per 4x4 block
+	case TextureFormatBC2RGBAUnorm,
+		TextureFormatBC2RGBAUnormSrgb,
+		TextureFormatBC3RGBAUnorm,
+		TextureFormatBC3RGBAUnormSrgb,
+		TextureFormatBC5RGUnorm,
+		TextureFormatBC5RGSnorm,
+		TextureFormatBC6HRGBUfloat,
+		TextureFormatBC6HRGBFloat,
+		TextureFormatBC7RGBAUnorm,
+		TextureFormatBC7RGBAUnormSrgb:
+		return 16
+
+	// ETC2/EAC compressed formats — 8 bytes per 4x4 block
+	case TextureFormatETC2RGB8Unorm,
+		TextureFormatETC2RGB8UnormSrgb,
+		TextureFormatETC2RGB8A1Unorm,
+		TextureFormatETC2RGB8A1UnormSrgb,
+		TextureFormatEACR11Unorm,
+		TextureFormatEACR11Snorm:
+		return 8
+
+	// ETC2/EAC compressed formats — 16 bytes per 4x4 block
+	case TextureFormatETC2RGBA8Unorm,
+		TextureFormatETC2RGBA8UnormSrgb,
+		TextureFormatEACRG11Unorm,
+		TextureFormatEACRG11Snorm:
+		return 16
+
+	// ASTC compressed formats — all 16 bytes per block (variable block dimensions)
+	case TextureFormatASTC4x4Unorm,
+		TextureFormatASTC4x4UnormSrgb,
+		TextureFormatASTC5x4Unorm,
+		TextureFormatASTC5x4UnormSrgb,
+		TextureFormatASTC5x5Unorm,
+		TextureFormatASTC5x5UnormSrgb,
+		TextureFormatASTC6x5Unorm,
+		TextureFormatASTC6x5UnormSrgb,
+		TextureFormatASTC6x6Unorm,
+		TextureFormatASTC6x6UnormSrgb,
+		TextureFormatASTC8x5Unorm,
+		TextureFormatASTC8x5UnormSrgb,
+		TextureFormatASTC8x6Unorm,
+		TextureFormatASTC8x6UnormSrgb,
+		TextureFormatASTC8x8Unorm,
+		TextureFormatASTC8x8UnormSrgb,
+		TextureFormatASTC10x5Unorm,
+		TextureFormatASTC10x5UnormSrgb,
+		TextureFormatASTC10x6Unorm,
+		TextureFormatASTC10x6UnormSrgb,
+		TextureFormatASTC10x8Unorm,
+		TextureFormatASTC10x8UnormSrgb,
+		TextureFormatASTC10x10Unorm,
+		TextureFormatASTC10x10UnormSrgb,
+		TextureFormatASTC12x10Unorm,
+		TextureFormatASTC12x10UnormSrgb,
+		TextureFormatASTC12x12Unorm,
+		TextureFormatASTC12x12UnormSrgb:
+		return 16
+
+	default:
+		return 0
+	}
+}
+
 // TextureDimension describes texture dimensions.
 type TextureDimension uint32
 
