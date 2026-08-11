@@ -2,6 +2,15 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.5.2] - 2026-08-11
+
+### Fixed
+
+- **`Features.Contains`** — now requires all queried bits, not just any overlap (#6, @besmpl)
+  - Aligns with `BufferUsage`, `TextureUsage`, `ShaderStage` (all use all-bits containment)
+  - Matches Rust `bitflags::contains` semantics
+  - Zero-bit queries return true (empty set is subset of everything)
+
 ## [v0.5.1] - 2026-06-28
 
 ### Fixed
