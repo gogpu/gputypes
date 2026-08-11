@@ -102,7 +102,7 @@ type Features uint64
 
 // Contains checks if the feature set contains a specific feature.
 func (f Features) Contains(feature Feature) bool {
-	return f&Features(feature) != 0
+	return f&Features(feature) == Features(feature)
 }
 
 // ContainsAll checks if the feature set contains all specified features.
