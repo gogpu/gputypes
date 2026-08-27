@@ -35,6 +35,11 @@ mode := gputypes.PresentModeImmediate // No VSync
 
 // Default device limits
 limits := gputypes.DefaultLimits()
+
+// Ray tracing features (experimental)
+features.Contains(gputypes.FeatureRayQuery)
+flags := gputypes.ASFlagAllowCompaction | gputypes.ASFlagPreferFastTrace
+usage := gputypes.BufferUsageBlasInput | gputypes.BufferUsageCopyDst
 ```
 
 ## Build & Test

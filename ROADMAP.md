@@ -1,10 +1,23 @@
 # Roadmap
 
-## Current: v0.5.0
+## Current: v0.6.0
 
-Go zero values for PrimitiveState enums = WebGPU spec defaults. `PrimitiveState{}` is a valid configuration.
+Ray tracing types (experimental). Feature flags, limits, buffer usage, geometry descriptors, binding layout. Matches Rust wgpu `EXPERIMENTAL_RAY_QUERY`.
 
 ## Released
+
+### v0.6.0 (2026-08-27)
+- Ray tracing: `AccelerationStructureFlags`, `BlasTriangleGeometrySizeDescriptor`, `CreateBlasDescriptor`, `CreateTlasDescriptor`, `AccelerationStructureBindingLayout`
+- 5 feature bits (20-24): RayQuery, RayHitVertexReturn, ExtendedASVertexFormats, ASBindingArray, RayTracingPipelines
+- 4 buffer usage bits (11-14): AccelerationStructureScratch, BlasInput, TlasInput, AccelerationStructureQuery
+- 8 limits fields for RT hardware capabilities
+- Tests for bit positions, no-overlap, flags Contains()
+
+### v0.5.2 (2026-08-11)
+- `Features.Contains()` fix — all-bits containment semantics
+
+### v0.5.1 (2026-06-28)
+- `TextureFormat.BlockCopySize()` — canonical bytes-per-texel-block
 
 ### v0.5.0 (2026-04-21)
 - **BREAKING:** PrimitiveTopology, FrontFace, CullMode renumbered — zero value = WebGPU spec default

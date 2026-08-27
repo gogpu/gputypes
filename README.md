@@ -106,9 +106,17 @@ Based on [WebGPU spec](https://www.w3.org/TR/webgpu/) and [wgpu-types](https://d
 - `Dx12ShaderCompiler`, `GLBackend`
 
 ### Limits & Features
-- `Limits` struct with all WebGPU limits (30+ fields)
-- `Features` flags (20 optional capabilities)
+- `Limits` struct with all WebGPU limits (38+ fields, including 8 RT limits)
+- `Features` flags (25 optional capabilities, including 5 RT features)
 - `DefaultLimits()`, `DownlevelLimits()` helpers
+
+### Ray Tracing (experimental)
+- `AccelerationStructureFlags`, `AccelerationStructureGeometryFlags` bitflags
+- `BlasTriangleGeometrySizeDescriptor`, `BlasAABBGeometrySizeDescriptor`
+- `CreateBlasDescriptor`, `CreateTlasDescriptor`
+- `AccelerationStructureBindingLayout`, `AccelerationStructureUpdateMode`, `AccelerationStructureCopyMode`
+- `BufferUsageAccelerationStructureScratch`, `BufferUsageBlasInput`, `BufferUsageTlasInput`
+- Feature-gated: requires `FeatureRayQuery` on the device
 
 ### Surface
 - `PresentMode` (AutoVsync, Fifo, Immediate, Mailbox)
