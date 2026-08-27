@@ -2,6 +2,26 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.6.0] - 2026-08-27
+
+### Added
+
+- **Ray Tracing types** (experimental, matching Rust wgpu `EXPERIMENTAL_RAY_QUERY`):
+  - `ray_tracing.go`: `AccelerationStructureUpdateMode`, `AccelerationStructureCopyMode`, `AccelerationStructureType` enums
+  - `AccelerationStructureFlags` bitflags (7 flags: AllowUpdate, AllowCompaction, PreferFastTrace, PreferFastBuild, LowMemory, UseTransform, AllowRayHitVertexReturn)
+  - `AccelerationStructureGeometryFlags` bitflags (Opaque, NoDuplicateAnyHitInvocation)
+  - `BlasTriangleGeometrySizeDescriptor`, `BlasAABBGeometrySizeDescriptor`, `BlasGeometrySizeDescriptors`
+  - `CreateBlasDescriptor`, `CreateTlasDescriptor`
+  - `AccelerationStructureBindingLayout` (for bind group layouts)
+  - Constants: `AABBGeometryMinStride` (24), `TransformBufferAlignment` (16), `InstanceBufferAlignment` (16)
+- **Feature flags** (bits 20-24): `FeatureRayQuery`, `FeatureRayHitVertexReturn`, `FeatureExtendedASVertexFormats`, `FeatureASBindingArray`, `FeatureRayTracingPipelines`
+- **Buffer usage flags** (bits 11-14): `BufferUsageAccelerationStructureScratch`, `BufferUsageBlasInput`, `BufferUsageTlasInput`, `BufferUsageAccelerationStructureQuery`
+- **Limits fields** (8): `MaxBlasPrimitiveCount`, `MaxBlasGeometryCount`, `MaxTlasInstanceCount`, `MaxAccelerationStructuresPerShaderStage`, `MaxBuffersAndAccelerationStructuresPerShaderStage`, `MaxBindingArrayAccelerationStructureElementsPerShaderStage`, `MaxRayDispatchCount`, `MaxRayRecursionDepth`
+- **BindGroupLayoutEntry**: `AccelerationStructure *AccelerationStructureBindingLayout` field
+- **Tests**: feature bit position verification, no-overlap with existing bits, buffer usage hex values, flags Contains(), constants validation
+
+**Note:** Ray tracing is experimental — not in the W3C WebGPU spec (Milestone 4+, blocked on bindless). Matches Rust wgpu's experimental approach. Feature-gated: all RT operations require `FeatureRayQuery` to be enabled on the device.
+
 ## [v0.5.2] - 2026-08-11
 
 ### Fixed

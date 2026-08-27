@@ -47,6 +47,19 @@ const (
 	FeatureSubgroupOperations
 	// FeatureSubgroupBarrier enables subgroup barriers in shaders.
 	FeatureSubgroupBarrier
+
+	// FeatureRayQuery enables inline ray queries in compute and fragment shaders.
+	// Experimental — not in W3C WebGPU spec (Milestone 4+).
+	FeatureRayQuery
+	// FeatureRayHitVertexReturn enables triangle vertex data retrieval on ray hit.
+	FeatureRayHitVertexReturn
+	// FeatureExtendedASVertexFormats enables Float32x2, Float16x2, Float16x4
+	// as valid vertex formats for acceleration structure geometry.
+	FeatureExtendedASVertexFormats
+	// FeatureASBindingArray enables arrays of acceleration structures in shaders.
+	FeatureASBindingArray
+	// FeatureRayTracingPipelines enables dedicated ray tracing pipelines.
+	FeatureRayTracingPipelines
 )
 
 // String returns the feature name.
@@ -92,6 +105,16 @@ func (f Feature) String() string {
 		return "SubgroupOperations"
 	case FeatureSubgroupBarrier:
 		return "SubgroupBarrier"
+	case FeatureRayQuery:
+		return "RayQuery"
+	case FeatureRayHitVertexReturn:
+		return "RayHitVertexReturn"
+	case FeatureExtendedASVertexFormats:
+		return "ExtendedASVertexFormats"
+	case FeatureASBindingArray:
+		return "ASBindingArray"
+	case FeatureRayTracingPipelines:
+		return "RayTracingPipelines"
 	default:
 		return "Unknown"
 	}

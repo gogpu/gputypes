@@ -42,6 +42,9 @@
 //
 // Geometry types: Extent3D, Origin3D, Color, etc.
 //
+// Ray Tracing types (experimental): AccelerationStructureFlags, BlasTriangleGeometrySizeDescriptor,
+// CreateBlasDescriptor, CreateTlasDescriptor, AccelerationStructureBindingLayout, etc.
+//
 // # Usage
 //
 // Import the package and use types directly:

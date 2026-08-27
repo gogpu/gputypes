@@ -24,6 +24,9 @@ type BindGroupLayoutEntry struct {
 	Texture *TextureBindingLayout
 	// StorageTexture describes a storage texture binding (nil if not storage).
 	StorageTexture *StorageTextureBindingLayout
+	// AccelerationStructure describes an acceleration structure binding (nil if not AS).
+	// Requires FeatureRayQuery.
+	AccelerationStructure *AccelerationStructureBindingLayout
 }
 
 // BufferBindingLayout describes a buffer binding in a bind group layout.
