@@ -71,6 +71,25 @@ type Limits struct {
 	MaxPushConstantSize uint32
 	// MaxNonSamplerBindings is the max non-sampler bindings.
 	MaxNonSamplerBindings uint32
+
+	// MaxBlasPrimitiveCount is the max primitives per BLAS (0 = RT not supported).
+	MaxBlasPrimitiveCount uint32
+	// MaxBlasGeometryCount is the max geometries per BLAS.
+	MaxBlasGeometryCount uint32
+	// MaxTlasInstanceCount is the max instances per TLAS.
+	MaxTlasInstanceCount uint32
+	// MaxAccelerationStructuresPerShaderStage is the max AS bindings per shader stage.
+	MaxAccelerationStructuresPerShaderStage uint32
+	// MaxBuffersAndAccelerationStructuresPerShaderStage is the combined max
+	// of storage buffers + AS bindings per shader stage.
+	MaxBuffersAndAccelerationStructuresPerShaderStage uint32
+	// MaxBindingArrayAccelerationStructureElementsPerShaderStage is the max AS
+	// binding array elements per shader stage (requires FeatureASBindingArray).
+	MaxBindingArrayAccelerationStructureElementsPerShaderStage uint32
+	// MaxRayDispatchCount is the max dispatch dimensions for trace rays.
+	MaxRayDispatchCount uint32
+	// MaxRayRecursionDepth is the max ray recursion depth (RT pipelines only).
+	MaxRayRecursionDepth uint32
 }
 
 // DefaultLimits returns the default WebGPU limits.

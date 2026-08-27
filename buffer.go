@@ -28,6 +28,15 @@ const (
 	BufferUsageIndirect BufferUsage = 0x0000000000000100
 	// BufferUsageQueryResolve allows use for query result resolution.
 	BufferUsageQueryResolve BufferUsage = 0x0000000000000200
+
+	// BufferUsageAccelerationStructureScratch allows use as scratch space during AS build.
+	BufferUsageAccelerationStructureScratch BufferUsage = 0x0000000000000800
+	// BufferUsageBlasInput allows use as BLAS build input (vertex/index/transform/AABB data).
+	BufferUsageBlasInput BufferUsage = 0x0000000000001000
+	// BufferUsageTlasInput allows use as TLAS build input (instance data).
+	BufferUsageTlasInput BufferUsage = 0x0000000000002000
+	// BufferUsageAccelerationStructureQuery allows use for AS compaction size readback.
+	BufferUsageAccelerationStructureQuery BufferUsage = 0x0000000000004000
 )
 
 // bufferUsageAll is a mask of all valid buffer usage flags.
@@ -35,7 +44,10 @@ const bufferUsageAll = BufferUsageMapRead | BufferUsageMapWrite |
 	BufferUsageCopySrc | BufferUsageCopyDst |
 	BufferUsageIndex | BufferUsageVertex |
 	BufferUsageUniform | BufferUsageStorage |
-	BufferUsageIndirect | BufferUsageQueryResolve
+	BufferUsageIndirect | BufferUsageQueryResolve |
+	BufferUsageAccelerationStructureScratch |
+	BufferUsageBlasInput | BufferUsageTlasInput |
+	BufferUsageAccelerationStructureQuery
 
 // Contains returns true if the usage includes the given flag.
 func (u BufferUsage) Contains(flag BufferUsage) bool {
