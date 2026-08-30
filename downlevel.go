@@ -5,16 +5,17 @@ import "strings"
 // DownlevelFlags represents binary flags listing features that may or may not
 // be present on downlevel adapters.
 //
+// The W3C WebGPU spec assumes all adapters meet a baseline (compute, indirect draw,
+// etc.) and simply excludes non-conformant hardware from requestAdapter(). As a
+// native Go library, we support backends below that baseline (GLES 3.0, CPU software
+// rasterizer) and degrade gracefully instead of refusing to run. DownlevelFlags
+// tracks exactly what each backend supports, enabling consumers to make informed
+// decisions (e.g., GPU compute vs CPU fallback).
+//
 // This is a Rust wgpu extension — the term "downlevel" does not appear in the
 // W3C WebGPU specification. Of 27 flags, 24 track capabilities required by the
 // spec for core (conformant) adapters, 1 (AnisotropicFiltering) is not required
 // by the spec, and 2 (MSL21, SurfaceViewFormats) are backend-specific.
-//
-// A downlevel adapter is a GPU adapter that wgpu supports, but with potentially
-// limited features, due to the lack of hardware feature support.
-//
-// Flags that are not present for a downlevel adapter or device usually indicates
-// non-compliance with the WebGPU specification, but not always.
 //
 // You can check whether a set of flags is compliant through the
 // DownlevelCapabilities.IsWebGPUCompliant method.
