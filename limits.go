@@ -134,10 +134,10 @@ func DefaultLimits() Limits {
 	}
 }
 
-// DownlevelLimits returns more conservative limits for older hardware.
+// DownlevelDefaultLimits returns more conservative limits for older hardware.
 //
 // Use these limits for maximum compatibility with older GPUs or mobile devices.
-func DownlevelLimits() Limits {
+func DownlevelDefaultLimits() Limits {
 	return Limits{
 		MaxTextureDimension1D:                     2048,
 		MaxTextureDimension2D:                     2048,
