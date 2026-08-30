@@ -5,6 +5,11 @@ import "strings"
 // DownlevelFlags represents binary flags listing features that may or may not
 // be present on downlevel adapters.
 //
+// This is a Rust wgpu extension — the term "downlevel" does not appear in the
+// W3C WebGPU specification. Of 27 flags, 24 track capabilities required by the
+// spec for core (conformant) adapters, 1 (AnisotropicFiltering) is not required
+// by the spec, and 2 (MSL21, SurfaceViewFormats) are backend-specific.
+//
 // A downlevel adapter is a GPU adapter that wgpu supports, but with potentially
 // limited features, due to the lack of hardware feature support.
 //
