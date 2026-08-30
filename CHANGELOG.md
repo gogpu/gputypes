@@ -2,6 +2,27 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.7.0] - 2026-08-30
+
+### Added
+
+- **DownlevelCapabilities** (ADR-071) — tracks backend capabilities for graceful degradation on non-conformant adapters (GLES 3.0, CPU software rasterizer). The W3C WebGPU spec excludes non-conformant adapters from `requestAdapter()` — as a native Go library, we degrade gracefully instead of refusing to run. Matches Rust wgpu-types `DownlevelCapabilities`.
+  - `DownlevelFlags` type (`uint32`) with 27 flag constants at explicit `1 << N` bit positions matching Rust wgpu-types (`limits.rs:1102-1246`). NOT iota — binary Rust compatibility.
+  - `DownlevelCapabilities` struct with 3 fields: `Flags DownlevelFlags`, `Limits DownlevelLimits`, `ShaderModel ShaderModel` (matches Rust `limits.rs:1056-1063`)
+  - `DownlevelLimits` empty struct (reserved for future, matches Rust `limits.rs:1044`)
+  - `ShaderModel` named type with `ShaderModelSm2` (2), `ShaderModelSm4` (4), `ShaderModelSm5` (5) constants
+  - `Contains()` method on `DownlevelFlags`
+  - `DownlevelFlagsAll()` — all 27 bits set
+  - `DownlevelFlagsCompliant()` — all flags minus AnisotropicFiltering (WebGPU compliance, matches Rust `limits.rs:1249-1257`)
+  - `DefaultDownlevelCapabilities()` — all flags + Sm5 (matches Rust Default impl, `limits.rs:1065-1072`)
+  - `IsWebGPUCompliant()` method — checks compliant flags + default limits + ShaderModel >= Sm5 (matches Rust `limits.rs:1075-1085`)
+  - `String()` methods on `DownlevelFlags` and `ShaderModel`
+  - 379 lines of tests covering all bit positions, Contains, All, Compliant, IsWebGPUCompliant (8 sub-cases), ShaderModel ordering
+
+### Changed
+
+- **`DownlevelLimits()` renamed to `DownlevelDefaultLimits()`** — avoids name conflict with the new `DownlevelLimits` struct
+
 ## [v0.6.0] - 2026-08-27
 
 ### Added

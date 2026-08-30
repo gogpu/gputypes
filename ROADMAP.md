@@ -1,10 +1,18 @@
 # Roadmap
 
-## Current: v0.6.0
+## Current: v0.7.0
 
-Ray tracing types (experimental). Feature flags, limits, buffer usage, geometry descriptors, binding layout. Matches Rust wgpu `EXPERIMENTAL_RAY_QUERY`.
+DownlevelCapabilities — 27 Rust-parity capability flags for graceful degradation on non-conformant adapters. Types, methods, ShaderModel, W3C spec compliance check.
 
 ## Released
+
+### v0.7.0 (2026-08-30)
+- `DownlevelFlags` (27 constants, explicit `1 << N` bit positions matching Rust wgpu-types)
+- `DownlevelCapabilities` struct (Flags, Limits, ShaderModel — 3 fields)
+- `DownlevelLimits` (reserved), `ShaderModel` named type (Sm2/Sm4/Sm5)
+- `DefaultDownlevelCapabilities()`, `IsWebGPUCompliant()`, `DownlevelFlagsCompliant()`
+- `DownlevelLimits()` renamed to `DownlevelDefaultLimits()`
+- 379 LOC tests
 
 ### v0.6.0 (2026-08-27)
 - Ray tracing: `AccelerationStructureFlags`, `BlasTriangleGeometrySizeDescriptor`, `CreateBlasDescriptor`, `CreateTlasDescriptor`, `AccelerationStructureBindingLayout`
