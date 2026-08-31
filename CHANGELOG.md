@@ -2,6 +2,14 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [v0.8.0] - 2026-08-31
+
+### Added
+
+- **Viewport, ScissorRect** (ADR-072) — shared geometry structs for viewport transformation and scissor clipping. Added to `geometry.go` alongside existing `Extent3D` and `Origin3D`. Maps 1:1 to VkViewport/MTLViewport/D3D12_VIEWPORT (viewport) and MTLScissorRect/VkRect2D (scissor). Go has no named arguments — struct params prevent silent swap bugs for 4-6 same-type positional params.
+- **DrawArgs, DrawIndexedArgs** (ADR-072) — draw call parameter structs in new `draw.go`. Field order byte-identical to VkDrawIndirectCommand/D3D12_DRAW_ARGUMENTS (draw) and VkDrawIndexedIndirectCommand/D3D12_DRAW_INDEXED_ARGUMENTS (draw indexed). Enables zero-copy indirect draw buffer use. `BaseVertex` is `int32` (signed, matching Vulkan spec).
+- Layout verification tests (`geometry_test.go`, `draw_test.go`) — `unsafe.Sizeof` and `unsafe.Offsetof` validate GPU ABI compatibility.
+
 ## [v0.7.0] - 2026-08-30
 
 ### Added

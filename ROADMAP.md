@@ -1,10 +1,17 @@
 # Roadmap
 
-## Current: v0.7.0
+## Current: v0.8.0
 
-DownlevelCapabilities — 27 Rust-parity capability flags for graceful degradation on non-conformant adapters. Types, methods, ShaderModel, W3C spec compliance check.
+Struct params for GPU API — Viewport, ScissorRect, DrawArgs, DrawIndexedArgs. Go-idiomatic struct types prevent silent param swap bugs. GPU ABI-compatible field layouts.
 
 ## Released
+
+### v0.8.0 (2026-08-31)
+- Viewport (6 float32) — maps 1:1 to VkViewport/MTLViewport/D3D12_VIEWPORT
+- ScissorRect (4 uint32) — maps 1:1 to MTLScissorRect/VkRect2D
+- DrawArgs (4 uint32) — byte-identical to VkDrawIndirectCommand
+- DrawIndexedArgs (5 fields, int32 BaseVertex) — byte-identical to VkDrawIndexedIndirectCommand
+- Layout verification tests (unsafe.Sizeof/Offsetof)
 
 ### v0.7.0 (2026-08-30)
 - `DownlevelFlags` (27 constants, explicit `1 << N` bit positions matching Rust wgpu-types)
