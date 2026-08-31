@@ -70,7 +70,7 @@ type Viewport struct {
 
 // ScissorRect describes a scissor clipping rectangle.
 //
-// Maps 1:1 to MTLScissorRect and SDL3 SDL_GPUViewport.
+// Maps 1:1 to MTLScissorRect and SDL3 SDL_Rect.
 // DX12 D3D12_RECT uses min/max corners; the backend converts.
 type ScissorRect struct {
 	// X is the left edge of the scissor rectangle in pixels.
