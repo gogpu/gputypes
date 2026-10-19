@@ -119,6 +119,7 @@ type BindGroupEntry struct {
 //   - BufferBinding for buffer resources
 //   - SamplerBinding for sampler resources
 //   - TextureViewBinding for texture view resources
+//   - AccelerationStructureBinding for top-level acceleration structures
 type BindingResource interface {
 	// bindingResource is a marker method to identify binding resources.
 	bindingResource()
@@ -154,6 +155,18 @@ type TextureViewBinding struct {
 
 // bindingResource implements BindingResource.
 func (TextureViewBinding) bindingResource() {}
+
+// AccelerationStructureBinding binds a top-level acceleration structure (TLAS)
+// to a binding slot whose layout entry has AccelerationStructure set.
+// Requires FeatureRayQuery.
+type AccelerationStructureBinding struct {
+	// AccelerationStructure is a handle to the acceleration structure
+	// (implementation-specific).
+	AccelerationStructure uintptr
+}
+
+// bindingResource implements BindingResource.
+func (AccelerationStructureBinding) bindingResource() {}
 
 // PipelineLayoutDescriptor describes a pipeline layout.
 type PipelineLayoutDescriptor struct {

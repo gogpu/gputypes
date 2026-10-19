@@ -92,6 +92,35 @@ type Limits struct {
 	MaxRayRecursionDepth uint32
 }
 
+// UsingMinimumSupportedAccelerationStructureValues returns a copy of l with the
+// acceleration structure limits set to the lowest values every backend that
+// supports FeatureRayQuery guarantees. Use it when requesting a device with
+// ray tracing, since DefaultLimits leaves these limits at zero.
+//
+// Matches Rust wgpu-types Limits::using_minimum_supported_acceleration_structure_values.
+func (l Limits) UsingMinimumSupportedAccelerationStructureValues() Limits {
+	l.MaxBlasGeometryCount = (1 << 24) - 1 // Vulkan's minimum
+	l.MaxTlasInstanceCount = (1 << 24) - 1 // Vulkan's minimum
+	l.MaxBlasPrimitiveCount = 1 << 28      // Metal's minimum
+	// On Metal, acceleration structures share buffer slots.
+	l.MaxAccelerationStructuresPerShaderStage = 1
+	l.MaxBuffersAndAccelerationStructuresPerShaderStage = 29
+	return l
+}
+
+// UsingAccelerationStructureValues returns a copy of l with the acceleration
+// structure limits taken from other (typically the adapter's limits).
+//
+// Matches Rust wgpu-types Limits::using_acceleration_structure_values.
+func (l Limits) UsingAccelerationStructureValues(other Limits) Limits {
+	l.MaxBlasGeometryCount = other.MaxBlasGeometryCount
+	l.MaxTlasInstanceCount = other.MaxTlasInstanceCount
+	l.MaxBlasPrimitiveCount = other.MaxBlasPrimitiveCount
+	l.MaxAccelerationStructuresPerShaderStage = other.MaxAccelerationStructuresPerShaderStage
+	l.MaxBuffersAndAccelerationStructuresPerShaderStage = other.MaxBuffersAndAccelerationStructuresPerShaderStage
+	return l
+}
+
 // DefaultLimits returns the default WebGPU limits.
 //
 // These are the minimum guaranteed limits per the WebGPU specification.

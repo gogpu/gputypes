@@ -195,3 +195,37 @@ func bitPosition(v uint64) int {
 	}
 	return pos
 }
+
+func TestUsingMinimumSupportedAccelerationStructureValues(t *testing.T) {
+	t.Parallel()
+
+	base := DefaultLimits()
+	l := base.UsingMinimumSupportedAccelerationStructureValues()
+	if l.MaxBlasGeometryCount != (1<<24)-1 || l.MaxTlasInstanceCount != (1<<24)-1 {
+		t.Errorf("geometry/instance counts = %d/%d, want 2^24-1", l.MaxBlasGeometryCount, l.MaxTlasInstanceCount)
+	}
+	if l.MaxBlasPrimitiveCount != 1<<28 {
+		t.Errorf("MaxBlasPrimitiveCount = %d, want 2^28", l.MaxBlasPrimitiveCount)
+	}
+	if l.MaxAccelerationStructuresPerShaderStage != 1 || l.MaxBuffersAndAccelerationStructuresPerShaderStage != 29 {
+		t.Errorf("per-stage limits = %d/%d, want 1/29",
+			l.MaxAccelerationStructuresPerShaderStage, l.MaxBuffersAndAccelerationStructuresPerShaderStage)
+	}
+	if l.MaxBindGroups != base.MaxBindGroups {
+		t.Error("non-AS limits must be preserved")
+	}
+
+	back := base.UsingAccelerationStructureValues(l)
+	if back != l {
+		t.Error("UsingAccelerationStructureValues should copy every AS limit")
+	}
+}
+
+func TestAccelerationStructureBindingIsBindingResource(t *testing.T) {
+	t.Parallel()
+
+	var r BindingResource = AccelerationStructureBinding{AccelerationStructure: 42}
+	if b, ok := r.(AccelerationStructureBinding); !ok || b.AccelerationStructure != 42 {
+		t.Errorf("unexpected binding %#v", r)
+	}
+}
