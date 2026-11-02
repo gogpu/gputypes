@@ -2,6 +2,21 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- **Texture format helpers** ported from Rust wgpu-types (`wgpu-types/src/texture/format.rs`). They complete the ADR-076 D1 helper set that texture-copy and view-format validation needs. Additive: no value of any existing constant changes.
+  - `TextureFormat.BlockDimensions()` and `IsCompressed()`: texel block size (BC and ETC2/EAC 4x4, ASTC as named, everything else 1x1).
+  - `TextureFormat.BlockCopySizeAspect(aspect)`: the copy footprint of one aspect, `(size, ok)`. Stencil of `Depth24PlusStencil8` and `Depth32FloatStencil8` is 1, depth of `Depth32FloatStencil8` is 4, and `ok` is false where Rust returns `None` (for example `Depth24Plus`).
+  - `TextureFormat.SampleType(aspect, features)`: the sample type for an aspect; `FeatureFloat32Filterable` makes the 32-bit float formats filterable.
+  - `TextureFormat.Components()` and `ComponentsWithAspect(aspect)`.
+  - `TextureFormat.RemoveSrgbSuffix()` and `AddSrgbSuffix()`.
+  - Exhaustive table tests cover every `TextureFormat`; a guard fails when a format has no row.
+- `BlockCopySize()` is unchanged. Its doc comment now says it returns 0 for formats whose copy size depends on the aspect and points to `BlockCopySizeAspect`.
+- ADR-076 D2 (`TextureBindingViewDimension`) is not part of this release; it is planned with wgpu v0.35.0.
+
+
 ## [v0.8.1] - 2026-11-02
 
 ### Added

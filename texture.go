@@ -529,7 +529,8 @@ func (f TextureFormat) IsSrgb() bool {
 // (e.g. 4x4 for BC/ETC2, variable for ASTC), but the returned value is
 // the byte size of that block.
 //
-// Returns 0 for formats whose copy size is implementation-defined:
+// Returns 0 for formats whose copy size is implementation-defined or depends
+// on the copied aspect (use BlockCopySizeAspect for those):
 //   - Depth24Plus
 //   - Depth24PlusStencil8
 //   - Depth32FloatStencil8
