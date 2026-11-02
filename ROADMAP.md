@@ -1,8 +1,8 @@
 # Roadmap
 
-## Current: v0.8.1
+## Current: v0.8.2
 
-Shader capability features for naga v0.21.0: one `Feature` per shader capability that Rust wgpu gates on a device feature.
+Texture format helpers from Rust wgpu-types, for texture-copy and view-format validation in wgpu.
 
 ## Next (before v1.0)
 
@@ -11,6 +11,10 @@ Shader capability features for naga v0.21.0: one `Feature` per shader capability
 - `Features` width and shape settled before the v1.0 freeze
 
 ## Released
+
+### v0.8.2 (2026-11-02)
+- `TextureFormat` helpers ported from Rust wgpu-types: `BlockDimensions`, `IsCompressed`, `BlockCopySizeAspect`, `SampleType`, `Components`, `ComponentsWithAspect`, `RemoveSrgbSuffix`, `AddSrgbSuffix`
+- A table test covers every format and fails when a format has no row
 
 ### v0.8.1 (2026-11-02)
 - 12 shader capability features (bits 25-36): PrimitiveIndex, ClipDistances, ShaderEarlyDepthTest, ShaderInt64, ShaderInt64AtomicMinMax, ShaderInt64AtomicAllOps, ShaderFloat32Atomic, ShaderI16, ShaderBarycentrics, ShaderPerVertex, SubgroupVertex, ShaderDrawIndex
