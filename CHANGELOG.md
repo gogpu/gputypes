@@ -2,6 +2,16 @@
 
 All notable changes to gputypes will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- **Shader capability features** (wgpu P1-API-008). Twelve `Feature` members, one per shader capability that Rust wgpu gates on a feature (wgpu-naga-bridge `features_to_naga_capabilities`). naga v0.21.0 refuses shaders that use these capabilities unless the device has the feature: `FeaturePrimitiveIndex`, `FeatureClipDistances`, `FeatureShaderEarlyDepthTest`, `FeatureShaderInt64`, `FeatureShaderInt64AtomicMinMax`, `FeatureShaderInt64AtomicAllOps`, `FeatureShaderFloat32Atomic`, `FeatureShaderI16`, `FeatureShaderBarycentrics`, `FeatureShaderPerVertex`, `FeatureSubgroupVertex`, `FeatureShaderDrawIndex`. They are appended after `FeatureRayTracingPipelines` (bits 25-36), so existing values do not change. A test pins the bits and names.
+
+### Fixed
+
+- Two staticcheck QF1001 findings in `downlevel_test.go` reported by current golangci-lint.
+
 ## [v0.8.0] - 2026-08-31
 
 ### Added

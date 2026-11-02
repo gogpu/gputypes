@@ -60,64 +60,102 @@ const (
 	FeatureASBindingArray
 	// FeatureRayTracingPipelines enables dedicated ray tracing pipelines.
 	FeatureRayTracingPipelines
+
+	// Shader capability features. Each one lets shaders use a naga capability
+	// that Rust wgpu gates on the feature of the same name
+	// (wgpu-naga-bridge features_to_naga_capabilities). Values are appended;
+	// existing members are never renumbered.
+
+	// FeaturePrimitiveIndex enables @builtin(primitive_index) (WGSL
+	// `enable primitive_index;`). Rust: PRIMITIVE_INDEX.
+	FeaturePrimitiveIndex
+	// FeatureClipDistances enables @builtin(clip_distances) (WGSL
+	// `enable clip_distances;`). Rust: CLIP_DISTANCES.
+	FeatureClipDistances
+	// FeatureShaderEarlyDepthTest enables @early_depth_test. Rust:
+	// SHADER_EARLY_DEPTH_TEST.
+	FeatureShaderEarlyDepthTest
+	// FeatureShaderInt64 enables i64 and u64 in shaders. Rust: SHADER_INT64.
+	FeatureShaderInt64
+	// FeatureShaderInt64AtomicMinMax enables atomicMin and atomicMax on 64-bit
+	// integers in storage buffers. Rust: SHADER_INT64_ATOMIC_MIN_MAX.
+	FeatureShaderInt64AtomicMinMax
+	// FeatureShaderInt64AtomicAllOps enables every atomic operation on 64-bit
+	// integers. Rust: SHADER_INT64_ATOMIC_ALL_OPS.
+	FeatureShaderInt64AtomicAllOps
+	// FeatureShaderFloat32Atomic enables atomic add and exchange on f32 in
+	// storage buffers. Rust: SHADER_FLOAT32_ATOMIC.
+	FeatureShaderFloat32Atomic
+	// FeatureShaderI16 enables i16 and u16 in shaders (WGSL
+	// `enable wgpu_int16;`). Rust: SHADER_I16.
+	FeatureShaderI16
+	// FeatureShaderBarycentrics enables @builtin(barycentric) in fragment
+	// shaders. Rust: SHADER_BARYCENTRICS.
+	FeatureShaderBarycentrics
+	// FeatureShaderPerVertex enables per-vertex fragment inputs (WGSL
+	// `enable wgpu_per_vertex;`). Rust: SHADER_PER_VERTEX.
+	FeatureShaderPerVertex
+	// FeatureSubgroupVertex enables subgroup operations in vertex shaders.
+	// Rust: SUBGROUP_VERTEX.
+	FeatureSubgroupVertex
+	// FeatureShaderDrawIndex enables @builtin(draw_index) (WGSL
+	// `enable draw_index;`). Rust: SHADER_DRAW_INDEX.
+	FeatureShaderDrawIndex
+
+	// featureEnd is one bit past the last member. It is not a feature; tests
+	// use it to check that every member has a name.
+	featureEnd
 )
 
-// String returns the feature name.
+// featureNames maps each feature to its name. A member added to the const
+// block without an entry here fails TestFeatureNamesComplete.
+var featureNames = map[Feature]string{
+	FeatureDepthClipControl:                     "DepthClipControl",
+	FeatureDepth32FloatStencil8:                 "Depth32FloatStencil8",
+	FeatureTextureCompressionBC:                 "TextureCompressionBC",
+	FeatureTextureCompressionETC2:               "TextureCompressionETC2",
+	FeatureTextureCompressionASTC:               "TextureCompressionASTC",
+	FeatureIndirectFirstInstance:                "IndirectFirstInstance",
+	FeatureShaderF16:                            "ShaderF16",
+	FeatureRG11B10UfloatRenderable:              "RG11B10UfloatRenderable",
+	FeatureBGRA8UnormStorage:                    "BGRA8UnormStorage",
+	FeatureFloat32Filterable:                    "Float32Filterable",
+	FeatureTimestampQuery:                       "TimestampQuery",
+	FeaturePipelineStatisticsQuery:              "PipelineStatisticsQuery",
+	FeatureMultiDrawIndirect:                    "MultiDrawIndirect",
+	FeatureMultiDrawIndirectCount:               "MultiDrawIndirectCount",
+	FeaturePushConstants:                        "PushConstants",
+	FeatureTextureAdapterSpecificFormatFeatures: "TextureAdapterSpecificFormatFeatures",
+	FeatureShaderFloat64:                        "ShaderFloat64",
+	FeatureVertexAttribute64bit:                 "VertexAttribute64bit",
+	FeatureSubgroupOperations:                   "SubgroupOperations",
+	FeatureSubgroupBarrier:                      "SubgroupBarrier",
+	FeatureRayQuery:                             "RayQuery",
+	FeatureRayHitVertexReturn:                   "RayHitVertexReturn",
+	FeatureExtendedASVertexFormats:              "ExtendedASVertexFormats",
+	FeatureASBindingArray:                       "ASBindingArray",
+	FeatureRayTracingPipelines:                  "RayTracingPipelines",
+	FeaturePrimitiveIndex:                       "PrimitiveIndex",
+	FeatureClipDistances:                        "ClipDistances",
+	FeatureShaderEarlyDepthTest:                 "ShaderEarlyDepthTest",
+	FeatureShaderInt64:                          "ShaderInt64",
+	FeatureShaderInt64AtomicMinMax:              "ShaderInt64AtomicMinMax",
+	FeatureShaderInt64AtomicAllOps:              "ShaderInt64AtomicAllOps",
+	FeatureShaderFloat32Atomic:                  "ShaderFloat32Atomic",
+	FeatureShaderI16:                            "ShaderI16",
+	FeatureShaderBarycentrics:                   "ShaderBarycentrics",
+	FeatureShaderPerVertex:                      "ShaderPerVertex",
+	FeatureSubgroupVertex:                       "SubgroupVertex",
+	FeatureShaderDrawIndex:                      "ShaderDrawIndex",
+}
+
+// String returns the feature name, or "Unknown" for a value that is not a
+// single defined feature.
 func (f Feature) String() string {
-	switch f {
-	case FeatureDepthClipControl:
-		return "DepthClipControl"
-	case FeatureDepth32FloatStencil8:
-		return "Depth32FloatStencil8"
-	case FeatureTextureCompressionBC:
-		return "TextureCompressionBC"
-	case FeatureTextureCompressionETC2:
-		return "TextureCompressionETC2"
-	case FeatureTextureCompressionASTC:
-		return "TextureCompressionASTC"
-	case FeatureIndirectFirstInstance:
-		return "IndirectFirstInstance"
-	case FeatureShaderF16:
-		return "ShaderF16"
-	case FeatureRG11B10UfloatRenderable:
-		return "RG11B10UfloatRenderable"
-	case FeatureBGRA8UnormStorage:
-		return "BGRA8UnormStorage"
-	case FeatureFloat32Filterable:
-		return "Float32Filterable"
-	case FeatureTimestampQuery:
-		return "TimestampQuery"
-	case FeaturePipelineStatisticsQuery:
-		return "PipelineStatisticsQuery"
-	case FeatureMultiDrawIndirect:
-		return "MultiDrawIndirect"
-	case FeatureMultiDrawIndirectCount:
-		return "MultiDrawIndirectCount"
-	case FeaturePushConstants:
-		return "PushConstants"
-	case FeatureTextureAdapterSpecificFormatFeatures:
-		return "TextureAdapterSpecificFormatFeatures"
-	case FeatureShaderFloat64:
-		return "ShaderFloat64"
-	case FeatureVertexAttribute64bit:
-		return "VertexAttribute64bit"
-	case FeatureSubgroupOperations:
-		return "SubgroupOperations"
-	case FeatureSubgroupBarrier:
-		return "SubgroupBarrier"
-	case FeatureRayQuery:
-		return "RayQuery"
-	case FeatureRayHitVertexReturn:
-		return "RayHitVertexReturn"
-	case FeatureExtendedASVertexFormats:
-		return "ExtendedASVertexFormats"
-	case FeatureASBindingArray:
-		return "ASBindingArray"
-	case FeatureRayTracingPipelines:
-		return "RayTracingPipelines"
-	default:
-		return "Unknown"
+	if name, ok := featureNames[f]; ok {
+		return name
 	}
+	return "Unknown"
 }
 
 // Features is a set of feature flags.
