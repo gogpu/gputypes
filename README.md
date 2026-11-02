@@ -106,8 +106,9 @@ Based on [WebGPU spec](https://www.w3.org/TR/webgpu/) and [wgpu-types](https://d
 - `Dx12ShaderCompiler`, `GLBackend`
 
 ### Limits & Features
-- `Limits` struct with all WebGPU limits (38+ fields, including 8 RT limits)
-- `Features` flags (25 optional capabilities, including 5 RT features)
+- `Limits` struct with all WebGPU limits, plus ray tracing limits
+- `Features` flags for optional capabilities: WebGPU features, ray tracing, and the shader capabilities that naga gates
+  on a device feature (primitive index, clip distances, 64-bit and 16-bit integers, atomics, barycentrics, ...)
 - `DefaultLimits()`, `DownlevelLimits()` helpers
 
 ### Ray Tracing (experimental)

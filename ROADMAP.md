@@ -1,10 +1,20 @@
 # Roadmap
 
-## Current: v0.8.0
+## Current: v0.8.1
 
-Struct params for GPU API — Viewport, ScissorRect, DrawArgs, DrawIndexedArgs. Go-idiomatic struct types prevent silent param swap bugs. GPU ABI-compatible field layouts.
+Shader capability features for naga v0.21.0: one `Feature` per shader capability that Rust wgpu gates on a device feature.
+
+## Next (before v1.0)
+
+- `Backends` widened to 32 bits with an explicit software backend bit (wgpu backend registration ADR, v0.35.0)
+- Features for capabilities that need their own API first: binding arrays, 16-bit norm formats, multiview, dual-source blending, texture atomics, mesh shaders
+- `Features` width and shape settled before the v1.0 freeze
 
 ## Released
+
+### v0.8.1 (2026-11-02)
+- 12 shader capability features (bits 25-36): PrimitiveIndex, ClipDistances, ShaderEarlyDepthTest, ShaderInt64, ShaderInt64AtomicMinMax, ShaderInt64AtomicAllOps, ShaderFloat32Atomic, ShaderI16, ShaderBarycentrics, ShaderPerVertex, SubgroupVertex, ShaderDrawIndex
+- Feature names come from a table keyed by the constants; a test fails on a member without a name
 
 ### v0.8.0 (2026-08-31)
 - Viewport (6 float32) — maps 1:1 to VkViewport/MTLViewport/D3D12_VIEWPORT
