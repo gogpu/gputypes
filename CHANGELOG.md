@@ -2,11 +2,15 @@
 
 All notable changes to gputypes will be documented in this file.
 
-## [Unreleased]
+## [v0.8.1] - 2026-11-02
 
 ### Added
 
-- **Shader capability features** (wgpu P1-API-008). Twelve `Feature` members, one per shader capability that Rust wgpu gates on a feature (wgpu-naga-bridge `features_to_naga_capabilities`). naga v0.21.0 refuses shaders that use these capabilities unless the device has the feature: `FeaturePrimitiveIndex`, `FeatureClipDistances`, `FeatureShaderEarlyDepthTest`, `FeatureShaderInt64`, `FeatureShaderInt64AtomicMinMax`, `FeatureShaderInt64AtomicAllOps`, `FeatureShaderFloat32Atomic`, `FeatureShaderI16`, `FeatureShaderBarycentrics`, `FeatureShaderPerVertex`, `FeatureSubgroupVertex`, `FeatureShaderDrawIndex`. They are appended after `FeatureRayTracingPipelines` (bits 25-36), so existing values do not change. A test pins the bits and names.
+- **Shader capability features** for naga v0.21.0. Twelve `Feature` members, one per shader capability that Rust wgpu gates on a feature (wgpu-naga-bridge `features_to_naga_capabilities`). naga v0.21.0 refuses shaders that use these capabilities unless the device has the feature: `FeaturePrimitiveIndex`, `FeatureClipDistances`, `FeatureShaderEarlyDepthTest`, `FeatureShaderInt64`, `FeatureShaderInt64AtomicMinMax`, `FeatureShaderInt64AtomicAllOps`, `FeatureShaderFloat32Atomic`, `FeatureShaderI16`, `FeatureShaderBarycentrics`, `FeatureShaderPerVertex`, `FeatureSubgroupVertex`, `FeatureShaderDrawIndex`. They are appended after `FeatureRayTracingPipelines` (bits 25-36), so existing values do not change. A test pins the bits and names.
+
+### Changed
+
+- `Feature.String()` reads its names from a table keyed by the constants instead of a switch. A new test fails when a member of the const block has no name. Names and the `"Unknown"` result for other values are unchanged.
 
 ### Fixed
 
