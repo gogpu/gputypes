@@ -4,6 +4,8 @@ All notable changes to gputypes will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.8.2] - 2026-11-02
+
 ### Added
 
 - **Texture format helpers** ported from Rust wgpu-types (`wgpu-types/src/texture/format.rs`). They complete the ADR-076 D1 helper set that texture-copy and view-format validation needs. Additive: no value of any existing constant changes.

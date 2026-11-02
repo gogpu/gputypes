@@ -64,7 +64,7 @@ import "github.com/gogpu/gputypes"
 Based on [WebGPU spec](https://www.w3.org/TR/webgpu/) and [wgpu-types](https://docs.rs/wgpu-types):
 
 ### Texture & Sampler
-- `TextureFormat` (97 formats including BC, ETC2, ASTC compressed)
+- `TextureFormat`: every WebGPU format, including BC, ETC2/EAC and ASTC compressed, with the format helpers of Rust wgpu-types (`BlockDimensions`, `IsCompressed`, `BlockCopySize`, `BlockCopySizeAspect`, `SampleType`, `Components`, `RemoveSrgbSuffix`, `AddSrgbSuffix`)
 - `TextureUsage`, `TextureDimension`, `TextureViewDimension`, `TextureAspect`
 - `TextureDescriptor`, `TextureViewDescriptor`, `TextureSampleType`
 - `AddressMode`, `FilterMode`, `MipmapFilterMode`, `CompareFunction`

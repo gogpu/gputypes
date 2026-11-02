@@ -23,6 +23,8 @@
 // The package provides types in several categories:
 //
 // Texture types: TextureFormat, TextureUsage, TextureDimension, TextureDescriptor, etc.
+// TextureFormat carries the format helpers of Rust wgpu-types (BlockDimensions,
+// BlockCopySizeAspect, SampleType, RemoveSrgbSuffix, ...).
 //
 // Buffer types: BufferUsage, BufferDescriptor, IndexFormat, etc.
 //
