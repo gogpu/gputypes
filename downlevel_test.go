@@ -268,10 +268,10 @@ func TestShaderModelValues(t *testing.T) {
 
 func TestShaderModelOrdering(t *testing.T) {
 	// ShaderModel must be orderable: Sm2 < Sm4 < Sm5.
-	if !(ShaderModelSm2 < ShaderModelSm4) {
+	if ShaderModelSm2 >= ShaderModelSm4 {
 		t.Error("expected Sm2 < Sm4")
 	}
-	if !(ShaderModelSm4 < ShaderModelSm5) {
+	if ShaderModelSm4 >= ShaderModelSm5 {
 		t.Error("expected Sm4 < Sm5")
 	}
 }
