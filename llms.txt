@@ -1,13 +1,22 @@
-# gputypes — GoGPU Ecosystem
+# gputypes
 
-> Part of the GoGPU Pure Go GPU Computing Ecosystem.
+> WebGPU types for Go: the enums, flags, structs and constants of the W3C WebGPU API, such as texture formats,
+> buffer and texture usages, features, limits, bind group and pipeline descriptors, vertex formats, downlevel
+> capabilities and ray tracing descriptors, with format helpers. Every module of the GoGPU ecosystem shares these
+> types, so values pass between them without conversion. The values are gputypes' own, as in Rust's wgpu-types,
+> not the numbers of the C `webgpu.h` header; code that crosses into C converts by name. Zero dependencies,
+> zero CGO, Go 1.25+. Pre-1.0: the API may change before v1.0.
 
 ## Docs
 
 - [API Reference](https://pkg.go.dev/github.com/gogpu/gputypes)
-- [AGENTS.md](https://github.com/gogpu/gputypes/blob/main/AGENTS.md): AI agent instructions
+- [README](https://github.com/gogpu/gputypes/blob/main/README.md): overview and usage
+- [AGENTS.md](https://github.com/gogpu/gputypes/blob/main/AGENTS.md): instructions for AI agents using gputypes
+- [CHANGELOG](https://github.com/gogpu/gputypes/blob/main/CHANGELOG.md): changes per release
+- [ROADMAP](https://github.com/gogpu/gputypes/blob/main/ROADMAP.md): plan to v1.0
+- [CONTRIBUTING](https://github.com/gogpu/gputypes/blob/main/CONTRIBUTING.md): how to contribute
 
 ## Ecosystem
 
-- [GoGPU Ecosystem](https://github.com/gogpu/gogpu/blob/main/AGENTS.md): Full ecosystem map
-- [Open Collective](https://opencollective.com/gogpu)
+- [GoGPU](https://github.com/gogpu): all modules of the GoGPU ecosystem
+- [Open Collective](https://opencollective.com/gogpu): support development
