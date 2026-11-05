@@ -1,0 +1,176 @@
+# GolangCI-Lint v2 configuration for github.com/gogpu/gputypes
+# Documentation: https://golangci-lint.run/docs/configuration/
+# Baseline from coregx/opt. Every exclusion below needs a reason comment;
+# never disable errcheck/staticcheck/gosec for whole production packages.
+
+version: "2"
+
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  enable:
+    # Code quality and complexity
+    - gocyclo
+    - gocognit
+    - funlen
+    - maintidx
+    - cyclop
+    - nestif
+
+    # Bug detection
+    - govet
+    - staticcheck
+    - errcheck
+    - errorlint
+    - gosec
+    - nilnil
+    - nilerr
+    - nilnesserr
+    - ineffassign
+
+    # Code style and consistency
+    - misspell
+    - whitespace
+    - unconvert
+    - unparam
+
+    # Naming conventions
+    - errname
+    - revive
+
+    # Performance
+    - prealloc
+    - makezero
+
+    # Code practices
+    - goconst
+    - usestdlibvars # "POST" -> http.MethodPost, "404" -> http.StatusNotFound
+    - exhaustive    # a switch/map literal over an enum that misses a value
+    - gocritic
+    - goprintffuncname
+    - nolintlint
+    - nakedret
+
+    # Comments and documentation
+    - godot
+
+    # Additional quality checkers
+    - dupl
+    - dogsled
+    - durationcheck
+
+  settings:
+    govet:
+      enable:
+        - copylocks
+      disable:
+        - fieldalignment
+
+    gocyclo:
+      min-complexity: 15
+
+    cyclop:
+      max-complexity: 15
+
+    funlen:
+      lines: 120
+      statements: 60
+
+    gocognit:
+      min-complexity: 20
+
+    misspell:
+      locale: US
+
+    # Named constants where they pay: go-stack references/constants.md. mnd is left
+    # out on purpose: on fursy most of its findings were commented capacity hints.
+    exhaustive:
+      check:
+        - switch
+        - mapliteral
+      # A default case is an explicit "the rest"; a switch without one is
+      # reported when the enum grows.
+      default-signifies-exhaustive: true
+      # featureEnd is the bound of the Feature bit range, not a feature: it
+      # has no name and is never a valid value. The regex sees the full path.
+      ignore-constants:
+        - "gputypes\\.featureEnd$"
+
+    nestif:
+      min-complexity: 4
+
+    revive:
+      rules:
+        - name: var-naming
+        - name: exported
+        - name: error-return
+        - name: error-naming
+        - name: if-return
+        - name: increment-decrement
+        - name: var-declaration
+        - name: package-comments
+        - name: range
+        - name: receiver-naming
+        - name: time-naming
+        - name: unexported-return
+        - name: indent-error-flow
+        - name: errorf
+        - name: empty-block
+        - name: superfluous-else
+        - name: unused-parameter
+        - name: unreachable-code
+        - name: redefines-builtin-id
+
+    gocritic:
+      enabled-tags:
+        - diagnostic
+        - style
+        - performance
+      disabled-checks:
+        - commentFormatting
+        - whyNoLint
+        - unnamedResult
+        - commentedOutCode
+      settings:
+        hugeParam:
+          sizeThreshold: 256
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - gocyclo
+          - cyclop
+          - funlen
+          - maintidx
+          - errcheck
+          - gosec
+          - goconst
+          - dupl
+          # Test tables list the formats a case covers, not every enum value.
+          - exhaustive
+          # Table-driven format tests check several properties per row.
+          - gocognit
+          - prealloc
+
+      - path: ".*\\.pb\\.go"
+        linters:
+          - revive
+          - gocritic
+
+      - path: internal/.*\.go
+        linters:
+          - godot
+
+    # Gitignored scratch and reference code is absent in CI.
+    paths:
+      - tmp/
+      - reference/
+
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new: false

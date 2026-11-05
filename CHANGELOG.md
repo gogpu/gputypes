@@ -4,6 +4,11 @@ All notable changes to gputypes will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- **CI.** Pull requests and pushes to main now run the tests with the race detector on Linux, macOS and Windows with Go oldstable and stable, the tests at the `go.mod` minimum, a 32-bit (386) build and test, golangci-lint, gofmt and `go mod tidy` checks, and govulncheck. Before, gputypes had no CI.
+- **Internal, no behavior change:** `TextureFormat.String`, `VertexFormat.String` and `BlendFactor.String` read their names from tables, the String methods share named constants for "Unknown", "Undefined" and "None", and the texture format helpers spell out their fallback as a `default` case. Every String result for the values 0–1023 was compared before and after.
+
 ## [v0.8.2] - 2026-11-02
 
 ### Added
