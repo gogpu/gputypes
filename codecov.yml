@@ -1,0 +1,21 @@
+coverage:
+  precision: 2
+  round: down
+  range: "60...100"
+  status:
+    project:
+      default:
+        target: 70%        # global standard: 70% overall, 90% for domain logic
+        threshold: 2%
+    patch:
+      default:
+        target: auto
+        informational: true
+  ignore:
+    - "examples/**"
+    - "cmd/**/main.go"
+    - "testdata/**"
+
+comment:
+  layout: "header, diff, files"
+  require_changes: true

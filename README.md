@@ -1,5 +1,9 @@
 # gputypes
 
+[![CI](https://github.com/gogpu/gputypes/actions/workflows/ci.yml/badge.svg)](https://github.com/gogpu/gputypes/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gogpu/gputypes.svg)](https://pkg.go.dev/github.com/gogpu/gputypes)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gogpu/gputypes)](https://goreportcard.com/report/github.com/gogpu/gputypes)
+
 WebGPU type definitions for the [gogpu](https://github.com/gogpu) ecosystem.
 
 ## Overview
