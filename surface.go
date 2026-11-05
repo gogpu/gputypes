@@ -34,7 +34,7 @@ const (
 func (m PresentMode) String() string {
 	switch m {
 	case PresentModeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case PresentModeFifo:
 		return "Fifo"
 	case PresentModeFifoRelaxed:
@@ -44,7 +44,7 @@ func (m PresentMode) String() string {
 	case PresentModeMailbox:
 		return "Mailbox"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -82,7 +82,7 @@ func (m CompositeAlphaMode) String() string {
 	case CompositeAlphaModeInherit:
 		return "Inherit"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -169,8 +169,8 @@ func (s SurfaceStatus) String() string {
 	case SurfaceStatusLost:
 		return "Lost"
 	case SurfaceStatusUnknown:
-		return "Unknown"
+		return nameUnknown
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }

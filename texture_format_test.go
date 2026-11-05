@@ -49,9 +49,10 @@ func srgbFmt(f TextureFormat, bw, bh, copySize uint32, comps uint8, lin TextureF
 	return formatRow{f: f, bw: bw, bh: bh, copySize: copySize, comps: comps, sample: fFloat, noSrgb: lin, hasSrgbSfx: true}
 }
 
-// block is a compressed format without an sRGB twin.
-func block(f TextureFormat, bw, bh, copySize uint32, comps uint8) formatRow {
-	return formatRow{f: f, bw: bw, bh: bh, copySize: copySize, comps: comps, sample: fFloat}
+// block is a compressed format without an sRGB twin. Every such format in
+// the table (BC4, BC5, BC6H, EAC) has 4x4 blocks.
+func block(f TextureFormat, copySize uint32, comps uint8) formatRow {
+	return formatRow{f: f, bw: 4, bh: 4, copySize: copySize, comps: comps, sample: fFloat}
 }
 
 func formatRows() []formatRow {
@@ -118,12 +119,12 @@ func formatRows() []formatRow {
 		srgbFmt(TextureFormatBC2RGBAUnormSrgb, 4, 4, 16, 4, TextureFormatBC2RGBAUnorm),
 		unorm(TextureFormatBC3RGBAUnorm, 4, 4, 16, 4, TextureFormatBC3RGBAUnormSrgb),
 		srgbFmt(TextureFormatBC3RGBAUnormSrgb, 4, 4, 16, 4, TextureFormatBC3RGBAUnorm),
-		block(TextureFormatBC4RUnorm, 4, 4, 8, 1),
-		block(TextureFormatBC4RSnorm, 4, 4, 8, 1),
-		block(TextureFormatBC5RGUnorm, 4, 4, 16, 2),
-		block(TextureFormatBC5RGSnorm, 4, 4, 16, 2),
-		block(TextureFormatBC6HRGBUfloat, 4, 4, 16, 3),
-		block(TextureFormatBC6HRGBFloat, 4, 4, 16, 3),
+		block(TextureFormatBC4RUnorm, 8, 1),
+		block(TextureFormatBC4RSnorm, 8, 1),
+		block(TextureFormatBC5RGUnorm, 16, 2),
+		block(TextureFormatBC5RGSnorm, 16, 2),
+		block(TextureFormatBC6HRGBUfloat, 16, 3),
+		block(TextureFormatBC6HRGBFloat, 16, 3),
 		unorm(TextureFormatBC7RGBAUnorm, 4, 4, 16, 4, TextureFormatBC7RGBAUnormSrgb),
 		srgbFmt(TextureFormatBC7RGBAUnormSrgb, 4, 4, 16, 4, TextureFormatBC7RGBAUnorm),
 		// ETC2 / EAC
@@ -133,10 +134,10 @@ func formatRows() []formatRow {
 		srgbFmt(TextureFormatETC2RGB8A1UnormSrgb, 4, 4, 8, 4, TextureFormatETC2RGB8A1Unorm),
 		unorm(TextureFormatETC2RGBA8Unorm, 4, 4, 16, 4, TextureFormatETC2RGBA8UnormSrgb),
 		srgbFmt(TextureFormatETC2RGBA8UnormSrgb, 4, 4, 16, 4, TextureFormatETC2RGBA8Unorm),
-		block(TextureFormatEACR11Unorm, 4, 4, 8, 1),
-		block(TextureFormatEACR11Snorm, 4, 4, 8, 1),
-		block(TextureFormatEACRG11Unorm, 4, 4, 16, 2),
-		block(TextureFormatEACRG11Snorm, 4, 4, 16, 2),
+		block(TextureFormatEACR11Unorm, 8, 1),
+		block(TextureFormatEACR11Snorm, 8, 1),
+		block(TextureFormatEACRG11Unorm, 16, 2),
+		block(TextureFormatEACRG11Snorm, 16, 2),
 	}
 	return append(rows, astcRows()...)
 }

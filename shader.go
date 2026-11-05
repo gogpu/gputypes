@@ -30,7 +30,7 @@ const (
 // String returns the shader stage name(s).
 func (s ShaderStage) String() string {
 	if s == ShaderStageNone {
-		return "None"
+		return nameNone
 	}
 
 	result := ""
@@ -50,7 +50,7 @@ func (s ShaderStage) String() string {
 		result += "Compute"
 	}
 	if result == "" {
-		return "Unknown"
+		return nameUnknown
 	}
 	return result
 }

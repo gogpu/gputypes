@@ -73,76 +73,48 @@ const (
 	VertexFormatUnorm1010102 VertexFormat = 0x0000001F
 )
 
+// vertexFormatNames maps each vertex format to its name.
+var vertexFormatNames = map[VertexFormat]string{
+	VertexFormatUndefined:    nameUndefined,
+	VertexFormatUint8x2:      "Uint8x2",
+	VertexFormatUint8x4:      "Uint8x4",
+	VertexFormatSint8x2:      "Sint8x2",
+	VertexFormatSint8x4:      "Sint8x4",
+	VertexFormatUnorm8x2:     "Unorm8x2",
+	VertexFormatUnorm8x4:     "Unorm8x4",
+	VertexFormatSnorm8x2:     "Snorm8x2",
+	VertexFormatSnorm8x4:     "Snorm8x4",
+	VertexFormatUint16x2:     "Uint16x2",
+	VertexFormatUint16x4:     "Uint16x4",
+	VertexFormatSint16x2:     "Sint16x2",
+	VertexFormatSint16x4:     "Sint16x4",
+	VertexFormatUnorm16x2:    "Unorm16x2",
+	VertexFormatUnorm16x4:    "Unorm16x4",
+	VertexFormatSnorm16x2:    "Snorm16x2",
+	VertexFormatSnorm16x4:    "Snorm16x4",
+	VertexFormatFloat16x2:    "Float16x2",
+	VertexFormatFloat16x4:    "Float16x4",
+	VertexFormatFloat32:      "Float32",
+	VertexFormatFloat32x2:    "Float32x2",
+	VertexFormatFloat32x3:    "Float32x3",
+	VertexFormatFloat32x4:    "Float32x4",
+	VertexFormatUint32:       "Uint32",
+	VertexFormatUint32x2:     "Uint32x2",
+	VertexFormatUint32x3:     "Uint32x3",
+	VertexFormatUint32x4:     "Uint32x4",
+	VertexFormatSint32:       "Sint32",
+	VertexFormatSint32x2:     "Sint32x2",
+	VertexFormatSint32x3:     "Sint32x3",
+	VertexFormatSint32x4:     "Sint32x4",
+	VertexFormatUnorm1010102: "Unorm1010102",
+}
+
 // String returns the vertex format name.
 func (f VertexFormat) String() string {
-	switch f {
-	case VertexFormatUndefined:
-		return "Undefined"
-	case VertexFormatUint8x2:
-		return "Uint8x2"
-	case VertexFormatUint8x4:
-		return "Uint8x4"
-	case VertexFormatSint8x2:
-		return "Sint8x2"
-	case VertexFormatSint8x4:
-		return "Sint8x4"
-	case VertexFormatUnorm8x2:
-		return "Unorm8x2"
-	case VertexFormatUnorm8x4:
-		return "Unorm8x4"
-	case VertexFormatSnorm8x2:
-		return "Snorm8x2"
-	case VertexFormatSnorm8x4:
-		return "Snorm8x4"
-	case VertexFormatUint16x2:
-		return "Uint16x2"
-	case VertexFormatUint16x4:
-		return "Uint16x4"
-	case VertexFormatSint16x2:
-		return "Sint16x2"
-	case VertexFormatSint16x4:
-		return "Sint16x4"
-	case VertexFormatUnorm16x2:
-		return "Unorm16x2"
-	case VertexFormatUnorm16x4:
-		return "Unorm16x4"
-	case VertexFormatSnorm16x2:
-		return "Snorm16x2"
-	case VertexFormatSnorm16x4:
-		return "Snorm16x4"
-	case VertexFormatFloat16x2:
-		return "Float16x2"
-	case VertexFormatFloat16x4:
-		return "Float16x4"
-	case VertexFormatFloat32:
-		return "Float32"
-	case VertexFormatFloat32x2:
-		return "Float32x2"
-	case VertexFormatFloat32x3:
-		return "Float32x3"
-	case VertexFormatFloat32x4:
-		return "Float32x4"
-	case VertexFormatUint32:
-		return "Uint32"
-	case VertexFormatUint32x2:
-		return "Uint32x2"
-	case VertexFormatUint32x3:
-		return "Uint32x3"
-	case VertexFormatUint32x4:
-		return "Uint32x4"
-	case VertexFormatSint32:
-		return "Sint32"
-	case VertexFormatSint32x2:
-		return "Sint32x2"
-	case VertexFormatSint32x3:
-		return "Sint32x3"
-	case VertexFormatSint32x4:
-		return "Sint32x4"
-	case VertexFormatUnorm1010102:
-		return "Unorm1010102"
-	default:
-		return "Unknown"
+	if name, ok := vertexFormatNames[f]; ok {
+		return name
 	}
+	return nameUnknown
 }
 
 // Size returns the byte size of the vertex format.
@@ -185,7 +157,7 @@ const (
 func (m VertexStepMode) String() string {
 	switch m {
 	case VertexStepModeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case VertexStepModeVertexBufferNotUsed:
 		return "VertexBufferNotUsed"
 	case VertexStepModeVertex:
@@ -193,7 +165,7 @@ func (m VertexStepMode) String() string {
 	case VertexStepModeInstance:
 		return "Instance"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 

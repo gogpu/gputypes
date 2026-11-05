@@ -155,8 +155,9 @@ func (f TextureFormat) SampleType(aspect TextureAspect, features Features) (Text
 		default:
 			return TextureSampleTypeUndefined, false
 		}
+	default:
+		return f.colorSampleType()
 	}
-	return f.colorSampleType()
 }
 
 // colorSampleType is the aspect-independent part of SampleType for the color
@@ -172,13 +173,14 @@ func (f TextureFormat) colorSampleType() (TextureSampleType, bool) {
 		TextureFormatR16Sint, TextureFormatRG16Sint, TextureFormatRGBA16Sint,
 		TextureFormatR32Sint, TextureFormatRG32Sint, TextureFormatRGBA32Sint:
 		return TextureSampleTypeSint, true
+	default:
+		if !f.isKnown() {
+			return TextureSampleTypeUndefined, false
+		}
+		// Every other defined format (normalized, 16-bit float, packed float,
+		// BC, ETC2/EAC, ASTC) samples as filterable float.
+		return TextureSampleTypeFloat, true
 	}
-	if !f.isKnown() {
-		return TextureSampleTypeUndefined, false
-	}
-	// Every other defined format (normalized, 16-bit float, packed float,
-	// BC, ETC2/EAC, ASTC) samples as filterable float.
-	return TextureSampleTypeFloat, true
 }
 
 // Components returns the number of components of this format. For combined
@@ -225,19 +227,20 @@ func (f TextureFormat) ComponentsWithAspect(aspect TextureAspect) uint8 {
 			return 1
 		}
 		return 2
+	default:
+		if !f.isKnown() {
+			return 0
+		}
+		// Every other defined format (RGBA and BGRA variants, RGB10A2, BC1/2/3/7,
+		// ETC2 with alpha, ASTC) has four components.
+		return 4
 	}
-	if !f.isKnown() {
-		return 0
-	}
-	// Every other defined format (RGBA and BGRA variants, RGB10A2, BC1/2/3/7,
-	// ETC2 with alpha, ASTC) has four components.
-	return 4
 }
 
 // isKnown reports whether f is a format this package defines: everything
 // except TextureFormatUndefined and values outside the enum.
 func (f TextureFormat) isKnown() bool {
-	return f != TextureFormatUndefined && f.String() != "Unknown"
+	return f != TextureFormatUndefined && f.String() != nameUnknown
 }
 
 // RemoveSrgbSuffix changes the *UnormSrgb formats to the matching *Unorm
@@ -265,43 +268,49 @@ func (f TextureFormat) RemoveSrgbSuffix() TextureFormat {
 		return TextureFormatETC2RGB8A1Unorm
 	case TextureFormatETC2RGBA8UnormSrgb:
 		return TextureFormatETC2RGBA8Unorm
+	default:
+		return f.removeAstcSrgb()
 	}
-	return f.removeAstcSrgb()
 }
 
-// removeAstcSrgb is the ASTC part of RemoveSrgbSuffix. ASTC formats are
+// astcSrgb maps each ASTC Unorm format to its UnormSrgb twin. ASTC formats are
 // consecutive Unorm/UnormSrgb pairs, but the mapping is spelled out so a
-// future renumbering cannot silently break it.
+// future renumbering cannot silently break it. It covers only the ASTC
+// formats by design, so the exhaustive check does not apply.
+//
+//exhaustive:ignore
+var astcSrgb = map[TextureFormat]TextureFormat{
+	TextureFormatASTC4x4Unorm:   TextureFormatASTC4x4UnormSrgb,
+	TextureFormatASTC5x4Unorm:   TextureFormatASTC5x4UnormSrgb,
+	TextureFormatASTC5x5Unorm:   TextureFormatASTC5x5UnormSrgb,
+	TextureFormatASTC6x5Unorm:   TextureFormatASTC6x5UnormSrgb,
+	TextureFormatASTC6x6Unorm:   TextureFormatASTC6x6UnormSrgb,
+	TextureFormatASTC8x5Unorm:   TextureFormatASTC8x5UnormSrgb,
+	TextureFormatASTC8x6Unorm:   TextureFormatASTC8x6UnormSrgb,
+	TextureFormatASTC8x8Unorm:   TextureFormatASTC8x8UnormSrgb,
+	TextureFormatASTC10x5Unorm:  TextureFormatASTC10x5UnormSrgb,
+	TextureFormatASTC10x6Unorm:  TextureFormatASTC10x6UnormSrgb,
+	TextureFormatASTC10x8Unorm:  TextureFormatASTC10x8UnormSrgb,
+	TextureFormatASTC10x10Unorm: TextureFormatASTC10x10UnormSrgb,
+	TextureFormatASTC12x10Unorm: TextureFormatASTC12x10UnormSrgb,
+	TextureFormatASTC12x12Unorm: TextureFormatASTC12x12UnormSrgb,
+}
+
+// astcUnorm is astcSrgb reversed: each ASTC UnormSrgb format to its Unorm twin.
+var astcUnorm = invertFormatMap(astcSrgb)
+
+func invertFormatMap(m map[TextureFormat]TextureFormat) map[TextureFormat]TextureFormat {
+	inv := make(map[TextureFormat]TextureFormat, len(m))
+	for k, v := range m {
+		inv[v] = k
+	}
+	return inv
+}
+
+// removeAstcSrgb is the ASTC part of RemoveSrgbSuffix.
 func (f TextureFormat) removeAstcSrgb() TextureFormat {
-	switch f {
-	case TextureFormatASTC4x4UnormSrgb:
-		return TextureFormatASTC4x4Unorm
-	case TextureFormatASTC5x4UnormSrgb:
-		return TextureFormatASTC5x4Unorm
-	case TextureFormatASTC5x5UnormSrgb:
-		return TextureFormatASTC5x5Unorm
-	case TextureFormatASTC6x5UnormSrgb:
-		return TextureFormatASTC6x5Unorm
-	case TextureFormatASTC6x6UnormSrgb:
-		return TextureFormatASTC6x6Unorm
-	case TextureFormatASTC8x5UnormSrgb:
-		return TextureFormatASTC8x5Unorm
-	case TextureFormatASTC8x6UnormSrgb:
-		return TextureFormatASTC8x6Unorm
-	case TextureFormatASTC8x8UnormSrgb:
-		return TextureFormatASTC8x8Unorm
-	case TextureFormatASTC10x5UnormSrgb:
-		return TextureFormatASTC10x5Unorm
-	case TextureFormatASTC10x6UnormSrgb:
-		return TextureFormatASTC10x6Unorm
-	case TextureFormatASTC10x8UnormSrgb:
-		return TextureFormatASTC10x8Unorm
-	case TextureFormatASTC10x10UnormSrgb:
-		return TextureFormatASTC10x10Unorm
-	case TextureFormatASTC12x10UnormSrgb:
-		return TextureFormatASTC12x10Unorm
-	case TextureFormatASTC12x12UnormSrgb:
-		return TextureFormatASTC12x12Unorm
+	if unorm, ok := astcUnorm[f]; ok {
+		return unorm
 	}
 	return f
 }
@@ -332,41 +341,15 @@ func (f TextureFormat) AddSrgbSuffix() TextureFormat {
 		return TextureFormatETC2RGB8A1UnormSrgb
 	case TextureFormatETC2RGBA8Unorm:
 		return TextureFormatETC2RGBA8UnormSrgb
+	default:
+		return f.addAstcSrgb()
 	}
-	return f.addAstcSrgb()
 }
 
 // addAstcSrgb is the ASTC part of AddSrgbSuffix.
 func (f TextureFormat) addAstcSrgb() TextureFormat {
-	switch f {
-	case TextureFormatASTC4x4Unorm:
-		return TextureFormatASTC4x4UnormSrgb
-	case TextureFormatASTC5x4Unorm:
-		return TextureFormatASTC5x4UnormSrgb
-	case TextureFormatASTC5x5Unorm:
-		return TextureFormatASTC5x5UnormSrgb
-	case TextureFormatASTC6x5Unorm:
-		return TextureFormatASTC6x5UnormSrgb
-	case TextureFormatASTC6x6Unorm:
-		return TextureFormatASTC6x6UnormSrgb
-	case TextureFormatASTC8x5Unorm:
-		return TextureFormatASTC8x5UnormSrgb
-	case TextureFormatASTC8x6Unorm:
-		return TextureFormatASTC8x6UnormSrgb
-	case TextureFormatASTC8x8Unorm:
-		return TextureFormatASTC8x8UnormSrgb
-	case TextureFormatASTC10x5Unorm:
-		return TextureFormatASTC10x5UnormSrgb
-	case TextureFormatASTC10x6Unorm:
-		return TextureFormatASTC10x6UnormSrgb
-	case TextureFormatASTC10x8Unorm:
-		return TextureFormatASTC10x8UnormSrgb
-	case TextureFormatASTC10x10Unorm:
-		return TextureFormatASTC10x10UnormSrgb
-	case TextureFormatASTC12x10Unorm:
-		return TextureFormatASTC12x10UnormSrgb
-	case TextureFormatASTC12x12Unorm:
-		return TextureFormatASTC12x12UnormSrgb
+	if srgb, ok := astcSrgb[f]; ok {
+		return srgb
 	}
 	return f
 }
