@@ -94,7 +94,7 @@ func (s BufferMapState) String() string {
 	case BufferMapStateMapped:
 		return "Mapped"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -130,7 +130,7 @@ const (
 func (t BufferBindingType) String() string {
 	switch t {
 	case BufferBindingTypeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case BufferBindingTypeUniform:
 		return "Uniform"
 	case BufferBindingTypeStorage:
@@ -138,7 +138,7 @@ func (t BufferBindingType) String() string {
 	case BufferBindingTypeReadOnlyStorage:
 		return "ReadOnlyStorage"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -158,13 +158,13 @@ const (
 func (f IndexFormat) String() string {
 	switch f {
 	case IndexFormatUndefined:
-		return "Undefined"
+		return nameUndefined
 	case IndexFormatUint16:
 		return "Uint16"
 	case IndexFormatUint32:
 		return "Uint32"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 

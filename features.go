@@ -155,7 +155,7 @@ func (f Feature) String() string {
 	if name, ok := featureNames[f]; ok {
 		return name
 	}
-	return "Unknown"
+	return nameUnknown
 }
 
 // Features is a set of feature flags.

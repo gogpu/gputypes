@@ -30,7 +30,7 @@ func (d DeviceType) String() string {
 	case DeviceTypeCPU:
 		return "CPU"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -68,7 +68,7 @@ func (b Backend) String() string {
 	case BackendBrowserWebGPU:
 		return "BrowserWebGPU"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -141,13 +141,13 @@ const (
 func (p PowerPreference) String() string {
 	switch p {
 	case PowerPreferenceNone:
-		return "None"
+		return nameNone
 	case PowerPreferenceLowPower:
 		return "LowPower"
 	case PowerPreferenceHighPerformance:
 		return "HighPerformance"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -179,7 +179,7 @@ func (h MemoryHints) String() string {
 	case MemoryHintsMemoryUsage:
 		return "MemoryUsage"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -222,7 +222,7 @@ func (c Dx12ShaderCompiler) String() string {
 	case Dx12ShaderCompilerDxc:
 		return "DXC"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -244,7 +244,7 @@ func (b GLBackend) String() string {
 	case GLBackendGLES:
 		return "GLES"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 

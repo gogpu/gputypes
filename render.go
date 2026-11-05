@@ -16,13 +16,13 @@ const (
 func (op LoadOp) String() string {
 	switch op {
 	case LoadOpUndefined:
-		return "Undefined"
+		return nameUndefined
 	case LoadOpLoad:
 		return "Load"
 	case LoadOpClear:
 		return "Clear"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -42,13 +42,13 @@ const (
 func (op StoreOp) String() string {
 	switch op {
 	case StoreOpUndefined:
-		return "Undefined"
+		return nameUndefined
 	case StoreOpStore:
 		return "Store"
 	case StoreOpDiscard:
 		return "Discard"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -86,40 +86,30 @@ const (
 	BlendFactorOneMinusConstant BlendFactor = 0x0000000D
 )
 
+// blendFactorNames maps each blend factor to its name.
+var blendFactorNames = map[BlendFactor]string{
+	BlendFactorUndefined:         nameUndefined,
+	BlendFactorZero:              "Zero",
+	BlendFactorOne:               "One",
+	BlendFactorSrc:               "Src",
+	BlendFactorOneMinusSrc:       "OneMinusSrc",
+	BlendFactorSrcAlpha:          "SrcAlpha",
+	BlendFactorOneMinusSrcAlpha:  "OneMinusSrcAlpha",
+	BlendFactorDst:               "Dst",
+	BlendFactorOneMinusDst:       "OneMinusDst",
+	BlendFactorDstAlpha:          "DstAlpha",
+	BlendFactorOneMinusDstAlpha:  "OneMinusDstAlpha",
+	BlendFactorSrcAlphaSaturated: "SrcAlphaSaturated",
+	BlendFactorConstant:          "Constant",
+	BlendFactorOneMinusConstant:  "OneMinusConstant",
+}
+
 // String returns the blend factor name.
 func (f BlendFactor) String() string {
-	switch f {
-	case BlendFactorUndefined:
-		return "Undefined"
-	case BlendFactorZero:
-		return "Zero"
-	case BlendFactorOne:
-		return "One"
-	case BlendFactorSrc:
-		return "Src"
-	case BlendFactorOneMinusSrc:
-		return "OneMinusSrc"
-	case BlendFactorSrcAlpha:
-		return "SrcAlpha"
-	case BlendFactorOneMinusSrcAlpha:
-		return "OneMinusSrcAlpha"
-	case BlendFactorDst:
-		return "Dst"
-	case BlendFactorOneMinusDst:
-		return "OneMinusDst"
-	case BlendFactorDstAlpha:
-		return "DstAlpha"
-	case BlendFactorOneMinusDstAlpha:
-		return "OneMinusDstAlpha"
-	case BlendFactorSrcAlphaSaturated:
-		return "SrcAlphaSaturated"
-	case BlendFactorConstant:
-		return "Constant"
-	case BlendFactorOneMinusConstant:
-		return "OneMinusConstant"
-	default:
-		return "Unknown"
+	if name, ok := blendFactorNames[f]; ok {
+		return name
 	}
+	return nameUnknown
 }
 
 // BlendOperation describes a blend operation.
@@ -144,7 +134,7 @@ const (
 func (op BlendOperation) String() string {
 	switch op {
 	case BlendOperationUndefined:
-		return "Undefined"
+		return nameUndefined
 	case BlendOperationAdd:
 		return "Add"
 	case BlendOperationSubtract:
@@ -156,7 +146,7 @@ func (op BlendOperation) String() string {
 	case BlendOperationMax:
 		return "Max"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -308,7 +298,7 @@ func (t PrimitiveTopology) String() string {
 	case PrimitiveTopologyTriangleStrip:
 		return "TriangleStrip"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -334,7 +324,7 @@ func (f FrontFace) String() string {
 	case FrontFaceCW:
 		return "CW"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -357,13 +347,13 @@ const (
 func (m CullMode) String() string {
 	switch m {
 	case CullModeNone:
-		return "None"
+		return nameNone
 	case CullModeFront:
 		return "Front"
 	case CullModeBack:
 		return "Back"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -441,7 +431,7 @@ const (
 func (op StencilOperation) String() string {
 	switch op {
 	case StencilOperationUndefined:
-		return "Undefined"
+		return nameUndefined
 	case StencilOperationKeep:
 		return "Keep"
 	case StencilOperationZero:
@@ -459,7 +449,7 @@ func (op StencilOperation) String() string {
 	case StencilOperationDecrementWrap:
 		return "DecrementWrap"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 

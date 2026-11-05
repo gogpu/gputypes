@@ -8,10 +8,11 @@ type TextureFormat uint32
 
 const (
 	// TextureFormatUndefined is an undefined format (invalid).
-	// webgpu.h: WGPUTextureFormat_Undefined = 0x00000000
+	// webgpu.h: WGPUTextureFormat_Undefined = 0x00000000.
 	TextureFormatUndefined TextureFormat = 0x00000000
 
-	// 8-bit formats
+	// 8-bit formats.
+
 	// TextureFormatR8Unorm is a single 8-bit normalized unsigned integer.
 	TextureFormatR8Unorm TextureFormat = 0x00000001
 	// TextureFormatR8Snorm is a single 8-bit normalized signed integer.
@@ -21,7 +22,8 @@ const (
 	// TextureFormatR8Sint is a single 8-bit signed integer.
 	TextureFormatR8Sint TextureFormat = 0x00000004
 
-	// 16-bit formats
+	// 16-bit formats.
+
 	// TextureFormatR16Unorm is a single 16-bit normalized unsigned integer.
 	TextureFormatR16Unorm TextureFormat = 0x00000005
 	// TextureFormatR16Snorm is a single 16-bit normalized signed integer.
@@ -41,7 +43,8 @@ const (
 	// TextureFormatRG8Sint is two 8-bit signed integers.
 	TextureFormatRG8Sint TextureFormat = 0x0000000D
 
-	// 32-bit formats
+	// 32-bit formats.
+
 	// TextureFormatR32Float is a single 32-bit float.
 	TextureFormatR32Float TextureFormat = 0x0000000E
 	// TextureFormatR32Uint is a single 32-bit unsigned integer.
@@ -73,7 +76,8 @@ const (
 	// TextureFormatBGRA8UnormSrgb is four 8-bit normalized unsigned integers in sRGB (BGRA order).
 	TextureFormatBGRA8UnormSrgb TextureFormat = 0x0000001C
 
-	// Packed 32-bit formats
+	// Packed 32-bit formats.
+
 	// TextureFormatRGB10A2Uint is a packed 10-10-10-2 unsigned integer format.
 	TextureFormatRGB10A2Uint TextureFormat = 0x0000001D
 	// TextureFormatRGB10A2Unorm is a packed 10-10-10-2 normalized unsigned format.
@@ -83,7 +87,8 @@ const (
 	// TextureFormatRGB9E5Ufloat is a packed 9-9-9-5 unsigned float format.
 	TextureFormatRGB9E5Ufloat TextureFormat = 0x00000020
 
-	// 64-bit formats
+	// 64-bit formats.
+
 	// TextureFormatRG32Float is two 32-bit floats.
 	TextureFormatRG32Float TextureFormat = 0x00000021
 	// TextureFormatRG32Uint is two 32-bit unsigned integers.
@@ -101,7 +106,8 @@ const (
 	// TextureFormatRGBA16Float is four 16-bit floats.
 	TextureFormatRGBA16Float TextureFormat = 0x00000028
 
-	// 128-bit formats
+	// 128-bit formats.
+
 	// TextureFormatRGBA32Float is four 32-bit floats.
 	TextureFormatRGBA32Float TextureFormat = 0x00000029
 	// TextureFormatRGBA32Uint is four 32-bit unsigned integers.
@@ -109,7 +115,8 @@ const (
 	// TextureFormatRGBA32Sint is four 32-bit signed integers.
 	TextureFormatRGBA32Sint TextureFormat = 0x0000002B
 
-	// Depth/stencil formats
+	// Depth/stencil formats.
+
 	// TextureFormatStencil8 is an 8-bit stencil format.
 	TextureFormatStencil8 TextureFormat = 0x0000002C
 	// TextureFormatDepth16Unorm is a 16-bit normalized depth format.
@@ -123,8 +130,9 @@ const (
 	// TextureFormatDepth32FloatStencil8 is a 32-bit float depth + 8-bit stencil format.
 	TextureFormatDepth32FloatStencil8 TextureFormat = 0x00000031
 
-	// BC compressed formats (requires TextureCompressionBC feature)
-	// webgpu.h: BC formats start at 0x32 (after depth/stencil formats)
+	// BC compressed formats (requires TextureCompressionBC feature).
+	// webgpu.h: BC formats start at 0x32 (after depth/stencil formats).
+
 	// TextureFormatBC1RGBAUnorm is BC1 RGBA normalized unsigned format.
 	TextureFormatBC1RGBAUnorm TextureFormat = 0x00000032
 	// TextureFormatBC1RGBAUnormSrgb is BC1 RGBA normalized unsigned sRGB format.
@@ -154,8 +162,9 @@ const (
 	// TextureFormatBC7RGBAUnormSrgb is BC7 RGBA normalized unsigned sRGB format.
 	TextureFormatBC7RGBAUnormSrgb TextureFormat = 0x0000003F
 
-	// ETC2 compressed formats (requires TextureCompressionETC2 feature)
-	// webgpu.h: ETC2 formats start at 0x40 (after BC formats)
+	// ETC2 compressed formats (requires TextureCompressionETC2 feature).
+	// webgpu.h: ETC2 formats start at 0x40 (after BC formats).
+
 	// TextureFormatETC2RGB8Unorm is ETC2 RGB normalized unsigned format.
 	TextureFormatETC2RGB8Unorm TextureFormat = 0x00000040
 	// TextureFormatETC2RGB8UnormSrgb is ETC2 RGB normalized unsigned sRGB format.
@@ -177,8 +186,9 @@ const (
 	// TextureFormatEACRG11Snorm is EAC RG normalized signed format.
 	TextureFormatEACRG11Snorm TextureFormat = 0x00000049
 
-	// ASTC compressed formats (requires TextureCompressionASTC feature)
-	// webgpu.h: ASTC formats start at 0x4A (after ETC2 formats)
+	// ASTC compressed formats (requires TextureCompressionASTC feature).
+	// webgpu.h: ASTC formats start at 0x4A (after ETC2 formats).
+
 	// TextureFormatASTC4x4Unorm is ASTC 4x4 normalized unsigned format.
 	TextureFormatASTC4x4Unorm TextureFormat = 0x0000004A
 	// TextureFormatASTC4x4UnormSrgb is ASTC 4x4 normalized unsigned sRGB format.
@@ -237,216 +247,118 @@ const (
 	TextureFormatASTC12x12UnormSrgb TextureFormat = 0x00000065
 )
 
+// textureFormatNames maps each texture format to its name.
+var textureFormatNames = map[TextureFormat]string{
+	TextureFormatUndefined:            nameUndefined,
+	TextureFormatR8Unorm:              "R8Unorm",
+	TextureFormatR8Snorm:              "R8Snorm",
+	TextureFormatR8Uint:               "R8Uint",
+	TextureFormatR8Sint:               "R8Sint",
+	TextureFormatR16Unorm:             "R16Unorm",
+	TextureFormatR16Snorm:             "R16Snorm",
+	TextureFormatR16Uint:              "R16Uint",
+	TextureFormatR16Sint:              "R16Sint",
+	TextureFormatR16Float:             "R16Float",
+	TextureFormatRG8Unorm:             "RG8Unorm",
+	TextureFormatRG8Snorm:             "RG8Snorm",
+	TextureFormatRG8Uint:              "RG8Uint",
+	TextureFormatRG8Sint:              "RG8Sint",
+	TextureFormatR32Float:             "R32Float",
+	TextureFormatR32Uint:              "R32Uint",
+	TextureFormatR32Sint:              "R32Sint",
+	TextureFormatRG16Unorm:            "RG16Unorm",
+	TextureFormatRG16Snorm:            "RG16Snorm",
+	TextureFormatRG16Uint:             "RG16Uint",
+	TextureFormatRG16Sint:             "RG16Sint",
+	TextureFormatRG16Float:            "RG16Float",
+	TextureFormatRGBA8Unorm:           "RGBA8Unorm",
+	TextureFormatRGBA8UnormSrgb:       "RGBA8UnormSrgb",
+	TextureFormatRGBA8Snorm:           "RGBA8Snorm",
+	TextureFormatRGBA8Uint:            "RGBA8Uint",
+	TextureFormatRGBA8Sint:            "RGBA8Sint",
+	TextureFormatBGRA8Unorm:           "BGRA8Unorm",
+	TextureFormatBGRA8UnormSrgb:       "BGRA8UnormSrgb",
+	TextureFormatRGB9E5Ufloat:         "RGB9E5Ufloat",
+	TextureFormatRGB10A2Uint:          "RGB10A2Uint",
+	TextureFormatRGB10A2Unorm:         "RGB10A2Unorm",
+	TextureFormatRG11B10Ufloat:        "RG11B10Ufloat",
+	TextureFormatRG32Float:            "RG32Float",
+	TextureFormatRG32Uint:             "RG32Uint",
+	TextureFormatRG32Sint:             "RG32Sint",
+	TextureFormatRGBA16Unorm:          "RGBA16Unorm",
+	TextureFormatRGBA16Snorm:          "RGBA16Snorm",
+	TextureFormatRGBA16Uint:           "RGBA16Uint",
+	TextureFormatRGBA16Sint:           "RGBA16Sint",
+	TextureFormatRGBA16Float:          "RGBA16Float",
+	TextureFormatRGBA32Float:          "RGBA32Float",
+	TextureFormatRGBA32Uint:           "RGBA32Uint",
+	TextureFormatRGBA32Sint:           "RGBA32Sint",
+	TextureFormatStencil8:             "Stencil8",
+	TextureFormatDepth16Unorm:         "Depth16Unorm",
+	TextureFormatDepth24Plus:          "Depth24Plus",
+	TextureFormatDepth24PlusStencil8:  "Depth24PlusStencil8",
+	TextureFormatDepth32Float:         "Depth32Float",
+	TextureFormatDepth32FloatStencil8: "Depth32FloatStencil8",
+	TextureFormatBC1RGBAUnorm:         "BC1RGBAUnorm",
+	TextureFormatBC1RGBAUnormSrgb:     "BC1RGBAUnormSrgb",
+	TextureFormatBC2RGBAUnorm:         "BC2RGBAUnorm",
+	TextureFormatBC2RGBAUnormSrgb:     "BC2RGBAUnormSrgb",
+	TextureFormatBC3RGBAUnorm:         "BC3RGBAUnorm",
+	TextureFormatBC3RGBAUnormSrgb:     "BC3RGBAUnormSrgb",
+	TextureFormatBC4RUnorm:            "BC4RUnorm",
+	TextureFormatBC4RSnorm:            "BC4RSnorm",
+	TextureFormatBC5RGUnorm:           "BC5RGUnorm",
+	TextureFormatBC5RGSnorm:           "BC5RGSnorm",
+	TextureFormatBC6HRGBUfloat:        "BC6HRGBUfloat",
+	TextureFormatBC6HRGBFloat:         "BC6HRGBFloat",
+	TextureFormatBC7RGBAUnorm:         "BC7RGBAUnorm",
+	TextureFormatBC7RGBAUnormSrgb:     "BC7RGBAUnormSrgb",
+	TextureFormatETC2RGB8Unorm:        "ETC2RGB8Unorm",
+	TextureFormatETC2RGB8UnormSrgb:    "ETC2RGB8UnormSrgb",
+	TextureFormatETC2RGB8A1Unorm:      "ETC2RGB8A1Unorm",
+	TextureFormatETC2RGB8A1UnormSrgb:  "ETC2RGB8A1UnormSrgb",
+	TextureFormatETC2RGBA8Unorm:       "ETC2RGBA8Unorm",
+	TextureFormatETC2RGBA8UnormSrgb:   "ETC2RGBA8UnormSrgb",
+	TextureFormatEACR11Unorm:          "EACR11Unorm",
+	TextureFormatEACR11Snorm:          "EACR11Snorm",
+	TextureFormatEACRG11Unorm:         "EACRG11Unorm",
+	TextureFormatEACRG11Snorm:         "EACRG11Snorm",
+	TextureFormatASTC4x4Unorm:         "ASTC4x4Unorm",
+	TextureFormatASTC4x4UnormSrgb:     "ASTC4x4UnormSrgb",
+	TextureFormatASTC5x4Unorm:         "ASTC5x4Unorm",
+	TextureFormatASTC5x4UnormSrgb:     "ASTC5x4UnormSrgb",
+	TextureFormatASTC5x5Unorm:         "ASTC5x5Unorm",
+	TextureFormatASTC5x5UnormSrgb:     "ASTC5x5UnormSrgb",
+	TextureFormatASTC6x5Unorm:         "ASTC6x5Unorm",
+	TextureFormatASTC6x5UnormSrgb:     "ASTC6x5UnormSrgb",
+	TextureFormatASTC6x6Unorm:         "ASTC6x6Unorm",
+	TextureFormatASTC6x6UnormSrgb:     "ASTC6x6UnormSrgb",
+	TextureFormatASTC8x5Unorm:         "ASTC8x5Unorm",
+	TextureFormatASTC8x5UnormSrgb:     "ASTC8x5UnormSrgb",
+	TextureFormatASTC8x6Unorm:         "ASTC8x6Unorm",
+	TextureFormatASTC8x6UnormSrgb:     "ASTC8x6UnormSrgb",
+	TextureFormatASTC8x8Unorm:         "ASTC8x8Unorm",
+	TextureFormatASTC8x8UnormSrgb:     "ASTC8x8UnormSrgb",
+	TextureFormatASTC10x5Unorm:        "ASTC10x5Unorm",
+	TextureFormatASTC10x5UnormSrgb:    "ASTC10x5UnormSrgb",
+	TextureFormatASTC10x6Unorm:        "ASTC10x6Unorm",
+	TextureFormatASTC10x6UnormSrgb:    "ASTC10x6UnormSrgb",
+	TextureFormatASTC10x8Unorm:        "ASTC10x8Unorm",
+	TextureFormatASTC10x8UnormSrgb:    "ASTC10x8UnormSrgb",
+	TextureFormatASTC10x10Unorm:       "ASTC10x10Unorm",
+	TextureFormatASTC10x10UnormSrgb:   "ASTC10x10UnormSrgb",
+	TextureFormatASTC12x10Unorm:       "ASTC12x10Unorm",
+	TextureFormatASTC12x10UnormSrgb:   "ASTC12x10UnormSrgb",
+	TextureFormatASTC12x12Unorm:       "ASTC12x12Unorm",
+	TextureFormatASTC12x12UnormSrgb:   "ASTC12x12UnormSrgb",
+}
+
 // String returns the name of the texture format.
 func (f TextureFormat) String() string {
-	switch f {
-	case TextureFormatUndefined:
-		return "Undefined"
-	case TextureFormatR8Unorm:
-		return "R8Unorm"
-	case TextureFormatR8Snorm:
-		return "R8Snorm"
-	case TextureFormatR8Uint:
-		return "R8Uint"
-	case TextureFormatR8Sint:
-		return "R8Sint"
-	case TextureFormatR16Unorm:
-		return "R16Unorm"
-	case TextureFormatR16Snorm:
-		return "R16Snorm"
-	case TextureFormatR16Uint:
-		return "R16Uint"
-	case TextureFormatR16Sint:
-		return "R16Sint"
-	case TextureFormatR16Float:
-		return "R16Float"
-	case TextureFormatRG8Unorm:
-		return "RG8Unorm"
-	case TextureFormatRG8Snorm:
-		return "RG8Snorm"
-	case TextureFormatRG8Uint:
-		return "RG8Uint"
-	case TextureFormatRG8Sint:
-		return "RG8Sint"
-	case TextureFormatR32Float:
-		return "R32Float"
-	case TextureFormatR32Uint:
-		return "R32Uint"
-	case TextureFormatR32Sint:
-		return "R32Sint"
-	case TextureFormatRG16Unorm:
-		return "RG16Unorm"
-	case TextureFormatRG16Snorm:
-		return "RG16Snorm"
-	case TextureFormatRG16Uint:
-		return "RG16Uint"
-	case TextureFormatRG16Sint:
-		return "RG16Sint"
-	case TextureFormatRG16Float:
-		return "RG16Float"
-	case TextureFormatRGBA8Unorm:
-		return "RGBA8Unorm"
-	case TextureFormatRGBA8UnormSrgb:
-		return "RGBA8UnormSrgb"
-	case TextureFormatRGBA8Snorm:
-		return "RGBA8Snorm"
-	case TextureFormatRGBA8Uint:
-		return "RGBA8Uint"
-	case TextureFormatRGBA8Sint:
-		return "RGBA8Sint"
-	case TextureFormatBGRA8Unorm:
-		return "BGRA8Unorm"
-	case TextureFormatBGRA8UnormSrgb:
-		return "BGRA8UnormSrgb"
-	case TextureFormatRGB9E5Ufloat:
-		return "RGB9E5Ufloat"
-	case TextureFormatRGB10A2Uint:
-		return "RGB10A2Uint"
-	case TextureFormatRGB10A2Unorm:
-		return "RGB10A2Unorm"
-	case TextureFormatRG11B10Ufloat:
-		return "RG11B10Ufloat"
-	case TextureFormatRG32Float:
-		return "RG32Float"
-	case TextureFormatRG32Uint:
-		return "RG32Uint"
-	case TextureFormatRG32Sint:
-		return "RG32Sint"
-	case TextureFormatRGBA16Unorm:
-		return "RGBA16Unorm"
-	case TextureFormatRGBA16Snorm:
-		return "RGBA16Snorm"
-	case TextureFormatRGBA16Uint:
-		return "RGBA16Uint"
-	case TextureFormatRGBA16Sint:
-		return "RGBA16Sint"
-	case TextureFormatRGBA16Float:
-		return "RGBA16Float"
-	case TextureFormatRGBA32Float:
-		return "RGBA32Float"
-	case TextureFormatRGBA32Uint:
-		return "RGBA32Uint"
-	case TextureFormatRGBA32Sint:
-		return "RGBA32Sint"
-	case TextureFormatStencil8:
-		return "Stencil8"
-	case TextureFormatDepth16Unorm:
-		return "Depth16Unorm"
-	case TextureFormatDepth24Plus:
-		return "Depth24Plus"
-	case TextureFormatDepth24PlusStencil8:
-		return "Depth24PlusStencil8"
-	case TextureFormatDepth32Float:
-		return "Depth32Float"
-	case TextureFormatDepth32FloatStencil8:
-		return "Depth32FloatStencil8"
-	case TextureFormatBC1RGBAUnorm:
-		return "BC1RGBAUnorm"
-	case TextureFormatBC1RGBAUnormSrgb:
-		return "BC1RGBAUnormSrgb"
-	case TextureFormatBC2RGBAUnorm:
-		return "BC2RGBAUnorm"
-	case TextureFormatBC2RGBAUnormSrgb:
-		return "BC2RGBAUnormSrgb"
-	case TextureFormatBC3RGBAUnorm:
-		return "BC3RGBAUnorm"
-	case TextureFormatBC3RGBAUnormSrgb:
-		return "BC3RGBAUnormSrgb"
-	case TextureFormatBC4RUnorm:
-		return "BC4RUnorm"
-	case TextureFormatBC4RSnorm:
-		return "BC4RSnorm"
-	case TextureFormatBC5RGUnorm:
-		return "BC5RGUnorm"
-	case TextureFormatBC5RGSnorm:
-		return "BC5RGSnorm"
-	case TextureFormatBC6HRGBUfloat:
-		return "BC6HRGBUfloat"
-	case TextureFormatBC6HRGBFloat:
-		return "BC6HRGBFloat"
-	case TextureFormatBC7RGBAUnorm:
-		return "BC7RGBAUnorm"
-	case TextureFormatBC7RGBAUnormSrgb:
-		return "BC7RGBAUnormSrgb"
-	case TextureFormatETC2RGB8Unorm:
-		return "ETC2RGB8Unorm"
-	case TextureFormatETC2RGB8UnormSrgb:
-		return "ETC2RGB8UnormSrgb"
-	case TextureFormatETC2RGB8A1Unorm:
-		return "ETC2RGB8A1Unorm"
-	case TextureFormatETC2RGB8A1UnormSrgb:
-		return "ETC2RGB8A1UnormSrgb"
-	case TextureFormatETC2RGBA8Unorm:
-		return "ETC2RGBA8Unorm"
-	case TextureFormatETC2RGBA8UnormSrgb:
-		return "ETC2RGBA8UnormSrgb"
-	case TextureFormatEACR11Unorm:
-		return "EACR11Unorm"
-	case TextureFormatEACR11Snorm:
-		return "EACR11Snorm"
-	case TextureFormatEACRG11Unorm:
-		return "EACRG11Unorm"
-	case TextureFormatEACRG11Snorm:
-		return "EACRG11Snorm"
-	case TextureFormatASTC4x4Unorm:
-		return "ASTC4x4Unorm"
-	case TextureFormatASTC4x4UnormSrgb:
-		return "ASTC4x4UnormSrgb"
-	case TextureFormatASTC5x4Unorm:
-		return "ASTC5x4Unorm"
-	case TextureFormatASTC5x4UnormSrgb:
-		return "ASTC5x4UnormSrgb"
-	case TextureFormatASTC5x5Unorm:
-		return "ASTC5x5Unorm"
-	case TextureFormatASTC5x5UnormSrgb:
-		return "ASTC5x5UnormSrgb"
-	case TextureFormatASTC6x5Unorm:
-		return "ASTC6x5Unorm"
-	case TextureFormatASTC6x5UnormSrgb:
-		return "ASTC6x5UnormSrgb"
-	case TextureFormatASTC6x6Unorm:
-		return "ASTC6x6Unorm"
-	case TextureFormatASTC6x6UnormSrgb:
-		return "ASTC6x6UnormSrgb"
-	case TextureFormatASTC8x5Unorm:
-		return "ASTC8x5Unorm"
-	case TextureFormatASTC8x5UnormSrgb:
-		return "ASTC8x5UnormSrgb"
-	case TextureFormatASTC8x6Unorm:
-		return "ASTC8x6Unorm"
-	case TextureFormatASTC8x6UnormSrgb:
-		return "ASTC8x6UnormSrgb"
-	case TextureFormatASTC8x8Unorm:
-		return "ASTC8x8Unorm"
-	case TextureFormatASTC8x8UnormSrgb:
-		return "ASTC8x8UnormSrgb"
-	case TextureFormatASTC10x5Unorm:
-		return "ASTC10x5Unorm"
-	case TextureFormatASTC10x5UnormSrgb:
-		return "ASTC10x5UnormSrgb"
-	case TextureFormatASTC10x6Unorm:
-		return "ASTC10x6Unorm"
-	case TextureFormatASTC10x6UnormSrgb:
-		return "ASTC10x6UnormSrgb"
-	case TextureFormatASTC10x8Unorm:
-		return "ASTC10x8Unorm"
-	case TextureFormatASTC10x8UnormSrgb:
-		return "ASTC10x8UnormSrgb"
-	case TextureFormatASTC10x10Unorm:
-		return "ASTC10x10Unorm"
-	case TextureFormatASTC10x10UnormSrgb:
-		return "ASTC10x10UnormSrgb"
-	case TextureFormatASTC12x10Unorm:
-		return "ASTC12x10Unorm"
-	case TextureFormatASTC12x10UnormSrgb:
-		return "ASTC12x10UnormSrgb"
-	case TextureFormatASTC12x12Unorm:
-		return "ASTC12x12Unorm"
-	case TextureFormatASTC12x12UnormSrgb:
-		return "ASTC12x12UnormSrgb"
-	default:
-		return "Unknown"
+	if name, ok := textureFormatNames[f]; ok {
+		return name
 	}
+	return nameUnknown
 }
 
 // IsDepthStencil returns true if this is a depth or stencil format.
@@ -607,6 +519,15 @@ func (f TextureFormat) BlockCopySize() uint32 {
 		TextureFormatDepth32FloatStencil8:
 		return 0
 
+	default:
+		return compressedBlockCopySize(f)
+	}
+}
+
+// compressedBlockCopySize returns the bytes per block of a compressed format,
+// or 0 for any other format.
+func compressedBlockCopySize(f TextureFormat) uint32 {
+	switch f {
 	// BC compressed formats — 8 bytes per 4x4 block
 	case TextureFormatBC1RGBAUnorm,
 		TextureFormatBC1RGBAUnormSrgb,
@@ -697,7 +618,7 @@ const (
 func (d TextureDimension) String() string {
 	switch d {
 	case TextureDimensionUndefined:
-		return "Undefined"
+		return nameUndefined
 	case TextureDimension1D:
 		return "1D"
 	case TextureDimension2D:
@@ -705,7 +626,7 @@ func (d TextureDimension) String() string {
 	case TextureDimension3D:
 		return "3D"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -733,7 +654,7 @@ const (
 func (d TextureViewDimension) String() string {
 	switch d {
 	case TextureViewDimensionUndefined:
-		return "Undefined"
+		return nameUndefined
 	case TextureViewDimension1D:
 		return "1D"
 	case TextureViewDimension2D:
@@ -747,7 +668,7 @@ func (d TextureViewDimension) String() string {
 	case TextureViewDimension3D:
 		return "3D"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -769,7 +690,7 @@ const (
 func (a TextureAspect) String() string {
 	switch a {
 	case TextureAspectUndefined:
-		return "Undefined"
+		return nameUndefined
 	case TextureAspectAll:
 		return "All"
 	case TextureAspectStencilOnly:
@@ -777,7 +698,7 @@ func (a TextureAspect) String() string {
 	case TextureAspectDepthOnly:
 		return "DepthOnly"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -878,7 +799,7 @@ const (
 func (t TextureSampleType) String() string {
 	switch t {
 	case TextureSampleTypeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case TextureSampleTypeFloat:
 		return "Float"
 	case TextureSampleTypeUnfilterableFloat:
@@ -890,7 +811,7 @@ func (t TextureSampleType) String() string {
 	case TextureSampleTypeUint:
 		return "Uint"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 

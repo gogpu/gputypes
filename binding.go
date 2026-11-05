@@ -73,7 +73,7 @@ const (
 func (a StorageTextureAccess) String() string {
 	switch a {
 	case StorageTextureAccessUndefined:
-		return "Undefined"
+		return nameUndefined
 	case StorageTextureAccessWriteOnly:
 		return "WriteOnly"
 	case StorageTextureAccessReadOnly:
@@ -81,7 +81,7 @@ func (a StorageTextureAccess) String() string {
 	case StorageTextureAccessReadWrite:
 		return "ReadWrite"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 

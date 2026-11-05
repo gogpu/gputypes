@@ -20,7 +20,7 @@ const (
 func (m AddressMode) String() string {
 	switch m {
 	case AddressModeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case AddressModeClampToEdge:
 		return "ClampToEdge"
 	case AddressModeRepeat:
@@ -28,7 +28,7 @@ func (m AddressMode) String() string {
 	case AddressModeMirrorRepeat:
 		return "MirrorRepeat"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -50,13 +50,13 @@ const (
 func (m FilterMode) String() string {
 	switch m {
 	case FilterModeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case FilterModeNearest:
 		return "Nearest"
 	case FilterModeLinear:
 		return "Linear"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -76,13 +76,13 @@ const (
 func (m MipmapFilterMode) String() string {
 	switch m {
 	case MipmapFilterModeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case MipmapFilterModeNearest:
 		return "Nearest"
 	case MipmapFilterModeLinear:
 		return "Linear"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -116,7 +116,7 @@ const (
 func (f CompareFunction) String() string {
 	switch f {
 	case CompareFunctionUndefined:
-		return "Undefined"
+		return nameUndefined
 	case CompareFunctionNever:
 		return "Never"
 	case CompareFunctionLess:
@@ -134,7 +134,7 @@ func (f CompareFunction) String() string {
 	case CompareFunctionAlways:
 		return "Always"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
@@ -223,7 +223,7 @@ const (
 func (t SamplerBindingType) String() string {
 	switch t {
 	case SamplerBindingTypeUndefined:
-		return "Undefined"
+		return nameUndefined
 	case SamplerBindingTypeFiltering:
 		return "Filtering"
 	case SamplerBindingTypeNonFiltering:
@@ -231,6 +231,6 @@ func (t SamplerBindingType) String() string {
 	case SamplerBindingTypeComparison:
 		return "Comparison"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }

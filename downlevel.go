@@ -246,7 +246,7 @@ func (sm ShaderModel) String() string {
 	case ShaderModelSm5:
 		return "Sm5"
 	default:
-		return "Unknown"
+		return nameUnknown
 	}
 }
 
