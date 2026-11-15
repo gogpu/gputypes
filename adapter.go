@@ -297,9 +297,13 @@ type InstanceDescriptor struct {
 }
 
 // DefaultInstanceDescriptor returns an instance descriptor with default settings.
+//
+// The default backend set is BackendsAll — every hardware backend, GL included.
+// Software is never in it: it is selected explicitly through BackendsSoftware
+// (ADR-083 of gogpu/wgpu).
 func DefaultInstanceDescriptor() InstanceDescriptor {
 	return InstanceDescriptor{
-		Backends:           BackendsPrimary,
+		Backends:           BackendsAll,
 		Flags:              InstanceFlagsNone,
 		Dx12ShaderCompiler: Dx12ShaderCompilerDxc,
 		GLBackend:          GLBackendGL,

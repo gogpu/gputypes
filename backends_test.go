@@ -86,3 +86,20 @@ func TestBackendsFlags(t *testing.T) {
 		t.Error("the union of every flag equals BackendsAll: BackendsSoftware must stay outside it")
 	}
 }
+
+// TestDefaultInstanceDescriptorBackends pins the default set: every hardware
+// backend, GL included, and never software.
+func TestDefaultInstanceDescriptorBackends(t *testing.T) {
+	desc := DefaultInstanceDescriptor()
+	if desc.Backends != BackendsAll {
+		t.Fatalf("DefaultInstanceDescriptor().Backends = %#x, want BackendsAll %#x", desc.Backends, BackendsAll)
+	}
+	for _, backend := range []Backend{BackendVulkan, BackendMetal, BackendDX12, BackendGL, BackendBrowserWebGPU} {
+		if !desc.Backends.Contains(backend) {
+			t.Errorf("the default set misses %v", backend)
+		}
+	}
+	if desc.Backends.Contains(BackendSoftware) {
+		t.Error("the default set contains software: it is selected explicitly, never by the default set")
+	}
+}

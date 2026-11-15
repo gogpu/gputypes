@@ -4,6 +4,15 @@ All notable changes to gputypes will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.9.1] - 2026-11-15
+
+### Changed
+
+- **`DefaultInstanceDescriptor().Backends` is `BackendsAll`** (was `BackendsPrimary`): the default set is every
+  hardware backend, GL included, and never software. GL has been registered by default since gogpu/wgpu v0.34.14,
+  but its default mask excluded it; ADR-083 of gogpu/wgpu makes `BackendsAll` the default mask for the v0.35.0
+  selection contract. Software stays explicit-only: `BackendsAll` does not contain `BackendsSoftware`.
+
 ## [v0.9.0] - 2026-11-15
 
 ### Added
