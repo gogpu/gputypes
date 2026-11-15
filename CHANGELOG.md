@@ -4,8 +4,20 @@ All notable changes to gputypes will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- **`BackendSoftware` and `BackendsSoftware`** — the Pure Go software renderer enters the backend set.
+  `BackendSoftware = 6` is outside Rust wgpu-types' 0..5; `BackendsSoftware = 1 << 6 = 64` is its flag, so the
+  invariant `BackendsX == 1 << BackendX` holds for every pair and `Contains(BackendSoftware)` answers true for a
+  software mask. Software is deliberately outside `BackendsAll`: it is selected explicitly, never by the default
+  set.
+
 ### Changed
 
+- **BREAKING: `Backends` is a `uint32`** (was `uint8`), as Rust wgpu-types' `Backends` is, so the set has room to
+  grow. Source-compatible for code that uses the named constants or assigns them to `gputypes.Backends` fields;
+  only an explicit `uint8` conversion of a mask breaks. The `Backend` constants are now explicit values instead of
+  `iota`: the numbers are unchanged, and an added constant can no longer renumber the existing ones.
 - **CI.** Pull requests and pushes to main now run the tests with the race detector on Linux, macOS and Windows with Go oldstable and stable, the tests at the `go.mod` minimum, a 32-bit (386) build and test, golangci-lint, gofmt and `go mod tidy` checks, and govulncheck. Before, gputypes had no CI.
 - **Internal, no behavior change:** `TextureFormat.String`, `VertexFormat.String` and `BlendFactor.String` read their names from tables, the String methods share named constants for "Unknown", "Undefined" and "None", and the texture format helpers spell out their fallback as a `default` case. Every String result for the values 0–1023 was compared before and after.
 

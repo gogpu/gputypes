@@ -35,21 +35,30 @@ func (d DeviceType) String() string {
 }
 
 // Backend identifies the graphics API backend.
+//
+// The values are explicit, never iota: 0..5 match Rust wgpu-types' Backend, so
+// a constant added here can never renumber them, and the flag set below relies
+// on the value: BackendsX == 1 << X.
 type Backend uint8
 
 const (
 	// BackendEmpty represents no backend (invalid state).
-	BackendEmpty Backend = iota
+	BackendEmpty Backend = 0
 	// BackendVulkan uses the Vulkan API (cross-platform).
-	BackendVulkan
+	BackendVulkan Backend = 1
 	// BackendMetal uses Apple's Metal API (macOS, iOS).
-	BackendMetal
+	BackendMetal Backend = 2
 	// BackendDX12 uses Microsoft DirectX 12 (Windows).
-	BackendDX12
+	BackendDX12 Backend = 3
 	// BackendGL uses OpenGL/OpenGL ES (legacy fallback).
-	BackendGL
+	BackendGL Backend = 4
 	// BackendBrowserWebGPU uses the browser's native WebGPU (WASM).
-	BackendBrowserWebGPU
+	BackendBrowserWebGPU Backend = 5
+	// BackendSoftware is the Pure Go software renderer: a CPU implementation of
+	// the WebGPU API rather than a backend a GPU driver provides. It is outside
+	// Rust wgpu-types' 0..5 and takes no part in the automatic backend
+	// selection — it is chosen explicitly through BackendsSoftware.
+	BackendSoftware Backend = 6
 )
 
 // String returns the backend name.
@@ -67,13 +76,20 @@ func (b Backend) String() string {
 		return "GL"
 	case BackendBrowserWebGPU:
 		return "BrowserWebGPU"
+	case BackendSoftware:
+		return "Software"
 	default:
 		return nameUnknown
 	}
 }
 
 // Backends is a set of backend flags.
-type Backends uint8
+//
+// It is a u32, as Rust wgpu-types' Backends is, so the set has room to grow.
+// Every flag follows the invariant BackendsX == 1 << BackendX, which Contains
+// relies on: a flag at any other bit would make Contains answer wrongly for its
+// own backend.
+type Backends uint32
 
 const (
 	// BackendsNone includes no backends.
@@ -88,12 +104,16 @@ const (
 	BackendsGL Backends = 1 << BackendGL
 	// BackendsBrowserWebGPU includes browser WebGPU.
 	BackendsBrowserWebGPU Backends = 1 << BackendBrowserWebGPU
+	// BackendsSoftware includes the Pure Go software renderer.
+	BackendsSoftware Backends = 1 << BackendSoftware
 
 	// BackendsPrimary includes all primary backends (Vulkan, Metal, DX12, BrowserWebGPU).
 	BackendsPrimary = BackendsVulkan | BackendsMetal | BackendsDX12 | BackendsBrowserWebGPU
 	// BackendsSecondary includes fallback backends (GL only).
 	BackendsSecondary = BackendsGL
-	// BackendsAll includes all backends.
+	// BackendsAll includes all hardware backends. BackendsSoftware is
+	// deliberately outside it: software is selected explicitly, never by the
+	// default set.
 	BackendsAll = BackendsPrimary | BackendsSecondary
 )
 
