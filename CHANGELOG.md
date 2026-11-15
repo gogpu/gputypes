@@ -4,6 +4,8 @@ All notable changes to gputypes will be documented in this file.
 
 ## [Unreleased]
 
+## [v0.9.0] - 2026-11-15
+
 ### Added
 
 - **`BackendSoftware` and `BackendsSoftware`** — the Pure Go software renderer enters the backend set.

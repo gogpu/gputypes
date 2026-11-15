@@ -1,16 +1,20 @@
 # Roadmap
 
-## Current: v0.8.2
+## Current: v0.9.0
 
-Texture format helpers from Rust wgpu-types, for texture-copy and view-format validation in wgpu.
+The software backend enters the set: `BackendSoftware` and `BackendsSoftware`, with `Backends` widened to 32 bits.
 
 ## Next (before v1.0)
 
-- `Backends` widened to 32 bits with an explicit software backend bit (wgpu backend registration ADR, v0.35.0)
 - Features for capabilities that need their own API first: binding arrays, 16-bit norm formats, multiview, dual-source blending, texture atomics, mesh shaders
 - `Features` width and shape settled before the v1.0 freeze
 
 ## Released
+
+### v0.9.0 (2026-11-15)
+- `BackendSoftware = 6` and `BackendsSoftware = 1 << 6 = 64`: the Pure Go software renderer in the backend set, outside `BackendsAll` (selected explicitly)
+- `Backends` is a `uint32` as Rust wgpu-types' is; the `Backend` constants are explicit values, so an added constant can no longer renumber the existing ones
+- A drift test pins `BackendsX == 1 << BackendX` for all six pairs, so `Contains` can never disagree with a flag
 
 ### v0.8.2 (2026-11-02)
 - `TextureFormat` helpers ported from Rust wgpu-types: `BlockDimensions`, `IsCompressed`, `BlockCopySizeAspect`, `SampleType`, `Components`, `ComponentsWithAspect`, `RemoveSrgbSuffix`, `AddSrgbSuffix`
