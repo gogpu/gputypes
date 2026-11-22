@@ -59,14 +59,15 @@ type PCIBusID struct {
 	Function uint32
 }
 
-// String returns the lowercase 4-digit-domain form "dddd:bb:dd.f" — the form
-// Rust wgpu renders (e.g. "0000:01:00.0").
+// String returns the lowercase minimum-4-digit-domain form "dddd:bb:dd.f" —
+// the form Rust wgpu renders (e.g. "0000:01:00.0"); a domain wider than four
+// hex digits is not truncated.
 func (p PCIBusID) String() string {
 	return fmt.Sprintf("%04x:%02x:%02x.%x", p.Domain, p.Bus, p.Device, p.Function)
 }
 
-// NVMLString returns the form NVML uses: an 8-digit zero-padded uppercase
-// domain, two-digit bus and device, and the function digit (e.g.
+// NVMLString returns the form NVML uses: a minimum-8-digit zero-padded
+// uppercase domain, two-digit bus and device, and the function digit (e.g.
 // "00000000:01:00.0"). As with DeviceUUID, this is a rendering, not a claim
 // that the adapter is managed by NVML, and callers comparing against
 // driver-provided strings should compare case-insensitively.
