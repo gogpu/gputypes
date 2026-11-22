@@ -10,7 +10,8 @@ type BindGroupLayoutDescriptor struct {
 
 // BindGroupLayoutEntry describes a single binding in a bind group layout.
 //
-// Exactly one of Buffer, Sampler, Texture, or StorageTexture must be set.
+// Exactly one of Buffer, Sampler, Texture, StorageTexture, or
+// AccelerationStructure must be set.
 type BindGroupLayoutEntry struct {
 	// Binding is the binding number (must match @binding in shader).
 	Binding uint32
