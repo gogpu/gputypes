@@ -2,7 +2,7 @@
 
 All notable changes to gputypes will be documented in this file.
 
-## [Unreleased]
+## [v0.9.2] - 2026-11-22
 
 ### Added
 
