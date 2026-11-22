@@ -4,6 +4,18 @@ All notable changes to gputypes will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- **`AdapterIdentity`** — the hardware identity a backend can report for a GPU, as a separate value next to
+  `AdapterInfo`: `DeviceUUID` (the Vulkan 16-byte device UUID, with `String()` and the NVML-form `NVMLString()`),
+  `PCIBusID` (the PCI slot locator from `VK_EXT_pci_bus_info`, with the lowercase canonical `String()` and the
+  NVML-form `NVMLString()`), `AdapterLUID` (the session-local Windows LUID, the same 64-bit value Vulkan reports as
+  `deviceLUID`) and `MetalRegistryID` (the instance-local Metal registry ID). Every field may be absent — the
+  all-zero value means "not reported", never an error — and the lifetime promise is per identifier: the UUID and
+  the PCI locator are persistent, the LUID changes on reboot, driver update or adapter disable, and the Metal
+  registry ID is not constant across reboots. `AdapterInfo` is unchanged: the WebGPU specification defines no
+  per-device identifier, so identity is a native extension surface kept separate from the spec-shaped metadata.
+
 ## [v0.9.1] - 2026-11-15
 
 ### Changed
